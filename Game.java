@@ -131,7 +131,6 @@ public class Game {
             Food = new Point(2,4);
             existFood = true;
             Field[Food.x][Food.y] = 3;
-            System.out.println("in");
        }
     }
     private void SetSnake(){
