@@ -4,9 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Scanner;
 
-import static java.lang.System.in;
-import static java.lang.System.setOut;
-
 public class Program {
     public static void main (String [] args) {
         GameModel game = new GameModel(5,10);
@@ -20,7 +17,6 @@ public class Program {
             if (s.length() > 1){
                 game.pCourse = game.DirCourse.Course.get(s);}
             game.RefreshField();
-
         }
 
     }

@@ -1,15 +1,13 @@
 package Snake;
 
-import Snake.Course;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Random;
 
 public class GameModel {
     public Point Food;
     private int height;
-    private int weight;
+    private int width;
     public ArrayList<Point> Snake;
     public Course DirCourse;
     public Point pCourse;
@@ -22,7 +20,7 @@ public class GameModel {
         DirCourse = new Course();
         this.pCourse = DirCourse.Course.get("DOWN");
         this.height = h;
-        this.weight = w;
+        this.width = w;
         this.Snake = new ArrayList<Point>();
         SetSnake();
         SpawnFood();
@@ -54,8 +52,8 @@ public class GameModel {
         if (y > this.height - 1)
             y = 0;
         if (x < 0)
-            x = this.weight - 1;
-        if (x > this.weight - 1)
+            x = this.width - 1;
+        if (x > this.width - 1)
             x = 0;
         Snake.set(0, new Point(x, y));
         if (Snake.get(0).x == Food.x && Snake.get(0).y == Food.y )
@@ -82,7 +80,7 @@ public class GameModel {
     public void Print(){
         for (int i = 0; i < height; i++)
         {
-            for (int j = 0; j < weight; j++){
+            for (int j = 0; j < width; j++){
                 Point cp = new Point(i,j);
                 if (cp.x == Food.x && cp.y == Food.y){
                     System.out.print("o");
@@ -103,7 +101,7 @@ public class GameModel {
            while (!existFood){
                Random rnd = new Random();
                int x = rnd.nextInt(height);
-               int y = rnd.nextInt(weight);
+               int y = rnd.nextInt(width);
                Point tempFood = new Point(x,y);
                if (!Snake.contains(tempFood))
                {Food = tempFood;
