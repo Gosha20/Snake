@@ -26,9 +26,11 @@ public class Program {
 //        frame.setVisible(true);
 //        Graphics g = grapPanel.getGraphics();
 //        grapPanel.paint(g);
+        Point a1 = new Point(1,1);
+        Point a2 = new Point(2,2);
+
         GameModel game = new GameModel(10,10);
-        game.Course = GameModel.eCourse.UP;
-        for (int i = 0; i< 5 ; i++){
+        for (int i = 0; i< 3 ; i++){
             game.RefreshField();
             game.Print();
             System.out.println();
