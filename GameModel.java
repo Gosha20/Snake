@@ -12,7 +12,7 @@ public class GameModel {
     public Point Food;
     private int height;
     private int weight;
-    public int[][] Field;
+//    public int[][] Field;
     public ArrayList<Point> Snake;
     public enum eCourse {RIGHT , LEFT, UP, DOWN};
     public eCourse Course;
@@ -26,19 +26,19 @@ public class GameModel {
         this.Course = eCourse.LEFT;
         this.height = h;
         this.weight = w;
-        this.Field = new int[h][w];
+//        this.Field = new int[h][w];
         this.Snake = new ArrayList<Point>();
         SetSnake();
         SpawnFood();
-        for(int i=0; i<Snake.size();i++){
-            if (i == 0)
-                Field[Snake.get(i).x][Snake.get(i).y] = 2;
-            else
-                Field[Snake.get(i).x][Snake.get(i).y] = 1;
-        }
+//        for(int i=0; i<Snake.size();i++){
+//            if (i == 0)
+//                Field[Snake.get(i).x][Snake.get(i).y] = 2;
+//            else
+//                Field[Snake.get(i).x][Snake.get(i).y] = 1;
+//        }
         this.SnakeLength = 3;
-
     }
+
     public void Set_Course(KeyEvent event) {
         switch (event.getKeyCode()) {
             case KeyEvent.VK_RIGHT:
@@ -73,7 +73,7 @@ public class GameModel {
                 addY = 1;
                 break;
         }
-        ClearField();
+//        ClearField();
         Point prev_segment;
         Point next_segment;
         prev_segment = this.Snake.get(0);
@@ -92,12 +92,12 @@ public class GameModel {
                     x = 0;
 
                 Snake.set(i, new Point(x, y));
-                Field[Snake.get(i).x][Snake.get(i).y] = 2;
+//                Field[Snake.get(i).x][Snake.get(i).y] = 2;
             }
             if (i < SnakeLength) {
                 next_segment = Snake.get(i + 1);
                 Snake.set(i + 1, prev_segment);
-                Field[prev_segment.x][prev_segment.y] = 1;
+//                Field[prev_segment.x][prev_segment.y] = 1;
                 prev_segment = next_segment;
             }
             if (Snake.get(0) == Food)
@@ -112,25 +112,27 @@ public class GameModel {
     public void Print(){
         for (int i = 0; i < height; i++)
         {
-            for (int j = 0; j < weight; j++)
-                System.out.print(Field[i][ j]);
+            for (int j = 0; j < weight; j++){
+//                if (Snake.get())
+                System.out.print(".");
+            }
             System.out.println();
         }
     }
 
-    private void ClearField(){
-        for (int i=0;i<this.height;i++)
-            for (int j=0;j<this.weight;j++)
-            {
-                if ((i != Food.x) && (j != Food.y))
-                this.Field[i][j] = 0;
-            }
-    }
+//    private void ClearField(){
+//        for (int i=0;i<this.height;i++)
+//            for (int j=0;j<this.weight;j++)
+//            {
+//                if ((i != Food.x) && (j != Food.y))
+//                this.Field[i][j] = 0;
+//            }
+//    }
     private void SpawnFood(){
        if (!existFood){
             Food = new Point(2,4);
             existFood = true;
-            Field[Food.x][Food.y] = 3;
+//            Field[Food.x][Food.y] = 3;
        }
     }
     private void SetSnake(){
