@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Program {
     public static void main (String [] args) {
-        GameModel game = new GameModel(5,10);
+        GameModel game = new GameModel(10,10);
         for (int i = 0; i< 100 ; i++){
             System.out.println(game.Snake);
             game.Print();
