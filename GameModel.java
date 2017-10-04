@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class GameModel {
     public Point Food;
-    private int height;
-    private int width;
+    public int height;
+    public int width;
     public ArrayList<Point> Snake;
     public Course DirCourse;
     public Point pCourse;
@@ -48,14 +48,16 @@ public class GameModel {
         int y = this.Snake.get(0).y + pCourse.x;
 
         if (y < 0)
-            y = this.height-1;
-        if (y > this.height - 1)
+            y = this.width-1;
+        if (y > this.width - 1)
             y = 0;
         if (x < 0)
-            x = this.width - 1;
-        if (x > this.width - 1)
+            x = this.height - 1;
+        if (x > this.height - 1)
             x = 0;
         Snake.set(0, new Point(x, y));
+        if (CheckOnEatSelf())
+            System.out.println("you lose, sorry");
         if (Snake.get(0).x == Food.x && Snake.get(0).y == Food.y )
         {
             Score++;
@@ -97,6 +99,7 @@ public class GameModel {
             System.out.println();
         }
     }
+
     private void SpawnFood(){
            while (!existFood){
                Random rnd = new Random();
@@ -107,10 +110,19 @@ public class GameModel {
                {Food = tempFood;
                    existFood = true;}
            }
-
     }
+
+    private boolean CheckOnEatSelf(){
+        Point snakeHead = Snake.get(0);
+        for (int i = 1; i<SnakeLength;i++){
+            if (snakeHead.x == Snake.get(i).x && snakeHead.y == Snake.get(i).y)
+                return true;
+        }
+        return false;
+    }
+
     private void SetSnake(){
-        for (int i = 0; i < 2;i++){
+        for (int i = 0; i < 3;i++){
             this.Snake.add(new Point(0,i ));
         }
     }
