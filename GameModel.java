@@ -1,6 +1,7 @@
 package Snake;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -26,22 +27,9 @@ public class GameModel {
         SpawnFood();
         this.SnakeLength = Snake.size();
     }
-//    public void Set_Course(KeyEvent event) {
-//        switch (event.getKeyCode()) {
-//            case KeyEvent.VK_RIGHT:
-//                Course = eCourse.RIGHT;
-//                break;
-//            case KeyEvent.VK_LEFT:
-//                Course = eCourse.LEFT;
-//                break;
-//            case KeyEvent.VK_DOWN:
-//                Course = eCourse.DOWN;
-//                break;
-//            case KeyEvent.VK_UP:
-//                Course = eCourse.UP;
-//                break;
-//        }
-//    }
+    public void Set_Course(String event) {
+        this.pCourse = DirCourse.Course.get(event);
+    }
 
     private void moveHead(){
         int x = this.Snake.get(0).x + pCourse.y;
@@ -68,6 +56,7 @@ public class GameModel {
     }
 
     public void RefreshField() {
+//        Set_Course();
         SpawnFood();
         Point prev_segment;
         Point next_segment;
