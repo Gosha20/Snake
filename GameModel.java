@@ -44,8 +44,6 @@ public class GameModel {
         if (x > this.height - 1)
             x = 0;
         Snake.set(0, new Point(x, y));
-        if (CheckOnEatSelf())
-            System.out.println("you lose, sorry");
         if (Snake.get(0).x == Food.x && Snake.get(0).y == Food.y )
         {
             Score++;
@@ -55,18 +53,22 @@ public class GameModel {
         }
     }
 
-    public void RefreshField() {
+    public boolean RefreshField() {
 //        Set_Course();
         SpawnFood();
         Point prev_segment;
         Point next_segment;
         prev_segment = this.Snake.get(0);
         moveHead();
+        if (CheckOnEatSelf())
+            return  false;
+
         for (int i = 0; i < this.SnakeLength-1; i++) {
             next_segment = Snake.get(i + 1);
             Snake.set(i + 1, prev_segment);
             prev_segment = next_segment;
         }
+        return true;
     }
     public void Print(){
         for (int i = 0; i < height; i++)
@@ -101,7 +103,7 @@ public class GameModel {
            }
     }
 
-    private boolean CheckOnEatSelf(){
+    public boolean CheckOnEatSelf(){
         Point snakeHead = Snake.get(0);
         for (int i = 1; i<SnakeLength;i++){
             if (snakeHead.x == Snake.get(i).x && snakeHead.y == Snake.get(i).y)
@@ -111,7 +113,7 @@ public class GameModel {
     }
 
     private void SetSnake(){
-        for (int i = 0; i < 3;i++){
+        for (int i = 0; i < 5;i++){
             this.Snake.add(new Point(0,i ));
         }
     }

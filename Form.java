@@ -8,9 +8,10 @@ public class Form extends JFrame {
         add(new GamePanel());
         pack();
         setLocationRelativeTo(null);
-        setSize(700, 700);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
+
+
 }

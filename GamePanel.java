@@ -3,19 +3,32 @@ package Snake;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JPanel;
-import java.awt.*;
 import javax.swing.*;
+import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    private Image food = new ImageIcon(getClass().getResource("Sprite/apple.png")).getImage();
-    private Image snake = new ImageIcon(getClass().getResource("Sprite/circle.png")).getImage();
-    private static GameModel game = new GameModel(35, 35);
+    private Image food ;
+    private Image snake ;
+    private static GameModel game = new GameModel(30, 30);
+    private Timer timer;
+    private final int pWidth = 300;
+    private final int pHeight = 300;
+    private final int dotSize = 10;
+    private final int delay = 400;
+    private void SetImage(){
+         food = new ImageIcon(getClass().getResource("Sprite/apple.png")).getImage();
+         snake = new ImageIcon(getClass().getResource("Sprite/circle.png")).getImage();
 
+    }
     public GamePanel(){
+        setBackground(Color.black);
         setFocusable(true);
+        setPreferredSize(new Dimension(pWidth, pHeight));
         addKeyListener(new KAdapter());
-        new Timer(200, this).start();
+        SetImage();
+        timer = new Timer(delay, this);
+        timer.start();
     }
 
     @Override
@@ -25,11 +38,25 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void Draw(Graphics g) {
-        g.drawImage(food, game.Food.y * 20,  game.Food.x * 20, this);
-        for(Point point : game.Snake)
-            g.drawImage(snake, point.y * 20,point.x * 20, this);
-        Toolkit.getDefaultToolkit().sync();
+        if (!game.CheckOnEatSelf()){
+            g.drawImage(food, game.Food.y * dotSize,  game.Food.x * dotSize, this);
+            for(Point point : game.Snake)
+                g.drawImage(snake, point.y * dotSize,point.x * dotSize, this);
+            Toolkit.getDefaultToolkit().sync();
+        }
+        else {
+            gameMassage(g, "Game Over!");
+            timer.stop();
+        }
     }
+    private void gameMassage(Graphics g, String msg) {
+        Font small = new Font("Helvetica", Font.BOLD, 40);
+        FontMetrics metr = getFontMetrics(small);
+        g.setColor(Color.white);
+        g.setFont(small);
+        g.drawString(msg, (pWidth - metr.stringWidth(msg)) / 2, pHeight / 2);
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -53,6 +80,12 @@ public class GamePanel extends JPanel implements ActionListener {
                     break;
                 case KeyEvent.VK_RIGHT:
                     game.Set_Course("RIGHT");
+                    break;
+                case KeyEvent.VK_SPACE:
+                    timer.stop();
+                    break;
+                case KeyEvent.VK_ENTER:
+                    timer.start();
                     break;
             }
         }
