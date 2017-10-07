@@ -19,7 +19,7 @@ public class GameModel {
     GameModel(int h, int w){
         existFood = false;
         DirCourse = new Course();
-        this.pCourse = DirCourse.Course.get("DOWN");
+        this.pCourse = DirCourse.Course.get("UP");
         this.height = h;
         this.width = w;
         this.Snake = new ArrayList<Point>();
@@ -28,53 +28,53 @@ public class GameModel {
         this.SnakeLength = Snake.size();
     }
     public void Set_Course(String event) {
-        this.pCourse = DirCourse.Course.get(event);
+        Point pEvent = DirCourse.Course.get(event);
+        if (!(pEvent.x + pCourse.x == 0 && pEvent.y + pCourse.y == 0))
+            this.pCourse = DirCourse.Course.get(event);
     }
 
     private void moveHead(){
-        int x = this.Snake.get(0).x + pCourse.y;
-        int y = this.Snake.get(0).y + pCourse.x;
+        int x = this.Snake.get(0).x + pCourse.x;
+        int y = this.Snake.get(0).y + pCourse.y;
 
         if (y < 0)
-            y = this.width-1;
-        if (y > this.width - 1)
+            y = this.height-1;
+        if (y > this.height - 1)
             y = 0;
         if (x < 0)
-            x = this.height - 1;
-        if (x > this.height - 1)
+            x = this.width - 1;
+        if (x > this.width - 1)
             x = 0;
-        Snake.set(0, new Point(x, y));
-        if (Snake.get(0).x == Food.x && Snake.get(0).y == Food.y )
+        if (x == Food.x && y == Food.y )
         {
             Score++;
             Snake.add(Food);
             SnakeLength++;
             existFood = false;
+            SpawnFood();
         }
+        Snake.set(0, new Point(x, y));
+
     }
 
-    public boolean RefreshField() {
-//        Set_Course();
+    public void RefreshField() {
         SpawnFood();
         Point prev_segment;
         Point next_segment;
         prev_segment = this.Snake.get(0);
         moveHead();
-        if (CheckOnEatSelf())
-            return  false;
-
         for (int i = 0; i < this.SnakeLength-1; i++) {
             next_segment = Snake.get(i + 1);
             Snake.set(i + 1, prev_segment);
             prev_segment = next_segment;
         }
-        return true;
     }
+
     public void Print(){
         for (int i = 0; i < height; i++)
         {
             for (int j = 0; j < width; j++){
-                Point cp = new Point(i,j);
+                Point cp = new Point(j,i);
                 if (cp.x == Food.x && cp.y == Food.y){
                     System.out.print("o");
                 }
@@ -98,8 +98,10 @@ public class GameModel {
                int y = rnd.nextInt(width);
                Point tempFood = new Point(x,y);
                if (!Snake.contains(tempFood))
-               {Food = tempFood;
-                   existFood = true;}
+               {
+                   Food = tempFood;
+                   existFood = true;
+               }
            }
     }
 
@@ -113,8 +115,8 @@ public class GameModel {
     }
 
     private void SetSnake(){
-        for (int i = 0; i < 5;i++){
-            this.Snake.add(new Point(0,i ));
+        for (int i = 0; i < 3;i++){
+            this.Snake.add(new Point(height/2, width/2+i ));
         }
     }
 }

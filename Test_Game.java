@@ -7,6 +7,31 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class Test_Game {
+    GameModel game = new GameModel(20,21);
+
+    @Test
+    public void test_correct_hw() {
+        assertEquals(game.height, 20);
+        assertEquals(game.width, 21);
+    }
+    @Test
+    public void test_exist_Snake() {
+        assertNotNull(game.Snake);
+    }
+    @Test
+    public void test_Snake_size() {
+        assertTrue(game.Snake.size() >= 3);
+        assertTrue(game.Snake.size() <= 6);
+    }
+
+    @Test
+    public void test_correct_Course(){
+        assertNotNull(game.pCourse);
+    }
+    @Test
+    public void test_Score(){
+        assertEquals(game.Score, 0);
+    }
 
     @Test(expected = IllegalArgumentException.class)
     public void test_initialization_1() {
@@ -18,19 +43,14 @@ public class Test_Game {
          GameModel game = new GameModel(-5,-1001);
     }
 
-    @Test
-    public void test_correct_assigment(){
-        GameModel game = new GameModel(20,21);
 
-        assertEquals(game.height, 20);
-        assertEquals(game.width, 21);
-        assertNotNull(game.Snake);
-        assertTrue(game.Snake.size() >= 3);
-        assertTrue(game.Snake.size() <= 6);
-        assertNotNull(game.pCourse);
-        assertEquals(game.Score, 0);
-    }
 
+
+    /*
+    БЕЛЕБЕРДА КАКАЯ ТО С КООРДИНАТАМИ В ТЕСТЕ ПРО ГОЛОВУ
+    ПРАВИЛА УСТАНОВКИ ГОЛОВЫ: 1) Х и У СТОЯТ КАК ОБЫЧНО
+    2) НАЧАЛЬНАЯ КООРДИНАТА = game.width/2, game.height/2 + i
+     */
     @Test
     public void test_correct_Snake_head_setting_1(){
         GameModel game_1 = new GameModel(1,7);
@@ -56,19 +76,19 @@ public class Test_Game {
         game.Food.x = 5;//это корректно, что х и у перепутаны местами или я запутался?
         game.Food.y = 0;
         int sLength = game.SnakeLength;
-
-        for (; game.Snake.get(0).y != game.Food.y && game.Snake.get(0).x != game.Food.x;){
+        for (int i = 0; i < 5 ;i++){
             game.Print();
             game.RefreshField();
+
         }
         game.RefreshField();
         assertFalse(game.Food == new Point(5,0));//проверка на съеденную еду и зареспавненную в др. точке
-        assertEquals(game.Snake.size(),sLength+1);
+        assertEquals(game.SnakeLength,sLength+1);
     }
 
     @Test
     public void test_correct_reverse_direction(){
-        Map<String,String> reversedCourses= new HashMap<>();
+        Map<String,String> reversedCourses = new HashMap<>();
         reversedCourses.put("DOWN", "UP");
         reversedCourses.put("UP", "DOWN");
         reversedCourses.put("RIGHT", "LEFT");
@@ -78,7 +98,7 @@ public class Test_Game {
 
         game.RefreshField();
         game.RefreshField();
-        game.Set_Course(reversedCourses.get(game.pCourse));
+        game.Set_Course(reversedCourses.get(game.pCourse));/* ты в словаре(строка, строка) обращаешься словать(поинт)*/
 
         assertEquals(game.pCourse, original);
     }

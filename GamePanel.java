@@ -39,9 +39,9 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void Draw(Graphics g) {
         if (!game.CheckOnEatSelf()){
-            g.drawImage(food, game.Food.y * dotSize,  game.Food.x * dotSize, this);
+            g.drawImage(food, game.Food.x * dotSize,  game.Food.y * dotSize, this);
             for(Point point : game.Snake)
-                g.drawImage(snake, point.y * dotSize,point.x * dotSize, this);
+                g.drawImage(snake, point.x * dotSize,point.y * dotSize, this);
             Toolkit.getDefaultToolkit().sync();
         }
         else {

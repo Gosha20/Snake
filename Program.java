@@ -2,13 +2,12 @@ package Snake;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.Scanner;
 import Snake.GamePanel;
 public class Program {
     public static void main (String [] args) {
 //        GameModel game = new GameModel(5 ,5);
-//        System.out.println(game.height);
-//        System.out.println(game.width);
 //        for (int i = 0; i< 100 ; i++){
 //            System.out.println(game.Snake);
 //            game.Print();
@@ -20,6 +19,7 @@ public class Program {
 //                game.pCourse = game.DirCourse.Course.get(s);}
 //            game.RefreshField();
 //        }
-        new Form();
+          new Form();
+
     }
 }
