@@ -15,7 +15,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private final int pWidth = 300;
     private final int pHeight = 300;
     private final int dotSize = 10;
-    private final int delay = 400;
+    private final int delay = 300;
     private void SetImage(){
          food = new ImageIcon(getClass().getResource("Sprite/apple.png")).getImage();
          snake = new ImageIcon(getClass().getResource("Sprite/circle.png")).getImage();
@@ -39,7 +39,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void Draw(Graphics g) {
         if (!game.CheckOnEatSelf()){
-            g.drawImage(food, game.Food.x * dotSize,  game.Food.y * dotSize, this);
+            g.drawImage(food, game.Buff.x * dotSize,  game.Buff.y * dotSize, this);
             for(Point point : game.Snake)
                 g.drawImage(snake, point.x * dotSize,point.y * dotSize, this);
             Toolkit.getDefaultToolkit().sync();

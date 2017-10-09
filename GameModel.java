@@ -1,31 +1,43 @@
 package Snake;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class GameModel {
-    public Point Food;
+    public Point Buff;
     public int height;
     public int width;
     public ArrayList<Point> Snake;
     public Course DirCourse;
     public Point pCourse;
-    public int SnakeLength;
-    public boolean existFood;
-    public int Score;
+     int SnakeLength;
+     boolean existBuff;
+     int Score;
+    Map<String,Buff> Buffs = new HashMap<>();
 
     GameModel(int h, int w){
-        existFood = false;
+        existBuff = false;
         DirCourse = new Course();
         this.pCourse = DirCourse.Course.get("UP");
         this.height = h;
         this.width = w;
-        this.Snake = new ArrayList<Point>();
+        this.Snake = new ArrayList();
+        Set_Buffs();
         SetSnake();
         SpawnFood();
         this.SnakeLength = Snake.size();
+    }
+    private void Set_Buffs(){
+        Buff apple = new Buff("apple", 1);
+        Buff poison = new Buff("poison", -1);
+        Buff banan = new Buff("banan", 3);
+        Buffs.put("apple", apple);
+        Buffs.put("banan", banan);
+        Buffs.put("poison", poison);
+
     }
     public void Set_Course(String event) {
         Point pEvent = DirCourse.Course.get(event);
@@ -45,12 +57,12 @@ public class GameModel {
             x = this.width - 1;
         if (x > this.width - 1)
             x = 0;
-        if (x == Food.x && y == Food.y )
+        if (x == Buff.x && y == Buff.y )
         {
             Score++;
-            Snake.add(Food);
+            Snake.add(Buff);
             SnakeLength++;
-            existFood = false;
+            existBuff = false;
             SpawnFood();
         }
         Snake.set(0, new Point(x, y));
@@ -75,7 +87,7 @@ public class GameModel {
         {
             for (int j = 0; j < width; j++){
                 Point cp = new Point(j,i);
-                if (cp.x == Food.x && cp.y == Food.y){
+                if (cp.x == Buff.x && cp.y == Buff.y){
                     System.out.print("o");
                 }
                 else{
@@ -92,15 +104,16 @@ public class GameModel {
     }
 
     private void SpawnFood(){
-           while (!existFood){
+           while (!existBuff){
                Random rnd = new Random();
                int x = rnd.nextInt(height);
                int y = rnd.nextInt(width);
-               Point tempFood = new Point(x,y);
-               if (!Snake.contains(tempFood))
+               int rndB = rnd.nextInt(Buffs.size());
+               Point tempBuff = new Point(x,y);
+               if (!Snake.contains(tempBuff))
                {
-                   Food = tempFood;
-                   existFood = true;
+                   Buff = tempBuff;
+                   existBuff = true;
                }
            }
     }
