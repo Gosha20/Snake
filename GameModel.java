@@ -1,16 +1,13 @@
 package Snake;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class GameModel {
     public Buff Buff;
     public int height;
     public int width;
-    public ArrayList<Point> Snake;
+    public Stack<Point> Snake;
     public Course DirCourse;
     public Point pCourse;
     public int SnakeLength;
@@ -24,7 +21,7 @@ public class GameModel {
         this.pCourse = DirCourse.Course.get("UP");
         this.height = h;
         this.width = w;
-        this.Snake = new ArrayList();
+        this.Snake = new Stack<>();
         Set_Buffs();
         SetSnake();
         SpawnFood();
@@ -64,12 +61,12 @@ public class GameModel {
             for (int i = 1; i<buff.countScore+1;i++ )
             {
                 Snake.add(new Point(-1,-1));
-                System.out.println(Snake);
             }
         }
         else{
-            for (int i = 0; i<buff.countScore;i++ )
-                Snake.remove(SnakeLength-i);
+            for (int i = 0; i > buff.countScore; i--){
+                Snake.pop();
+            }
         }
     }
     public void RefreshField() {
@@ -143,8 +140,8 @@ public class GameModel {
         Buff apple = new Buff("apple", 1, 10);
         Buff poison = new Buff("poison", -1, 20);
         Buff banan = new Buff("banan", 3, 7);
-//        Buffs.add(apple);
-//        Buffs.add(banan);
+        Buffs.add(apple);
+        Buffs.add(banan);
         Buffs.add(poison);
     }
 }
