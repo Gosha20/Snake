@@ -7,18 +7,18 @@ import java.util.Map;
 import java.util.Random;
 
 public class GameModel {
-    public Point Buff;
+    public Buff Buff;
     public int height;
     public int width;
     public ArrayList<Point> Snake;
     public Course DirCourse;
     public Point pCourse;
-     int SnakeLength;
-     boolean existBuff;
-     int Score;
-    Map<String,Buff> Buffs = new HashMap<>();
+    public int SnakeLength;
+    public boolean existBuff;
+    public int Score;
+    public ArrayList<Buff> Buffs = new ArrayList<>();
 
-    GameModel(int h, int w){
+    public GameModel(int h, int w){
         existBuff = false;
         DirCourse = new Course();
         this.pCourse = DirCourse.Course.get("UP");
@@ -30,15 +30,7 @@ public class GameModel {
         SpawnFood();
         this.SnakeLength = Snake.size();
     }
-    private void Set_Buffs(){
-        Buff apple = new Buff("apple", 1);
-        Buff poison = new Buff("poison", -1);
-        Buff banan = new Buff("banan", 3);
-        Buffs.put("apple", apple);
-        Buffs.put("banan", banan);
-        Buffs.put("poison", poison);
 
-    }
     public void Set_Course(String event) {
         Point pEvent = DirCourse.Course.get(event);
         if (!(pEvent.x + pCourse.x == 0 && pEvent.y + pCourse.y == 0))
@@ -59,16 +51,27 @@ public class GameModel {
             x = 0;
         if (x == Buff.x && y == Buff.y )
         {
-            Score++;
-            Snake.add(Buff);
-            SnakeLength++;
+            Score+=Buff.countScore;
+            EatBuff(Buff);
+            SnakeLength+=Buff.countScore;
             existBuff = false;
             SpawnFood();
         }
         Snake.set(0, new Point(x, y));
-
     }
-
+    private void EatBuff(Buff buff){
+        if (buff.countScore > 0){
+            for (int i = 1; i<buff.countScore+1;i++ )
+            {
+                Snake.add(new Point(-1,-1));
+                System.out.println(Snake);
+            }
+        }
+        else{
+            for (int i = 0; i<buff.countScore;i++ )
+                Snake.remove(SnakeLength-i);
+        }
+    }
     public void RefreshField() {
         SpawnFood();
         Point prev_segment;
@@ -104,15 +107,18 @@ public class GameModel {
     }
 
     private void SpawnFood(){
+        Random rnd = new Random();
+        int n = rnd.nextInt(Buffs.size());
+
            while (!existBuff){
-               Random rnd = new Random();
+               Buff = Buffs.get(n);
                int x = rnd.nextInt(height);
                int y = rnd.nextInt(width);
-               int rndB = rnd.nextInt(Buffs.size());
                Point tempBuff = new Point(x,y);
                if (!Snake.contains(tempBuff))
                {
-                   Buff = tempBuff;
+                   Buff.x = tempBuff.x;
+                   Buff.y = tempBuff.y;
                    existBuff = true;
                }
            }
@@ -131,5 +137,14 @@ public class GameModel {
         for (int i = 0; i < 3;i++){
             this.Snake.add(new Point(height/2, width/2+i ));
         }
+    }
+
+    private void Set_Buffs(){
+        Buff apple = new Buff("apple", 1, 10);
+        Buff poison = new Buff("poison", -1, 20);
+        Buff banan = new Buff("banan", 3, 7);
+//        Buffs.add(apple);
+//        Buffs.add(banan);
+        Buffs.add(poison);
     }
 }

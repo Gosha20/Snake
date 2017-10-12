@@ -10,19 +10,17 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private Image food ;
     private Image snake ;
-    private static GameModel game = new GameModel(30, 30);
+    private static GameModel game = new GameModel(20, 20);
     private Timer timer;
-    private final int pWidth = 300;
-    private final int pHeight = 300;
-    private final int dotSize = 10;
-    private final int delay = 300;
-    private void SetImage(){
-         food = new ImageIcon(getClass().getResource("Sprite/apple.png")).getImage();
-         snake = new ImageIcon(getClass().getResource("Sprite/circle.png")).getImage();
+    private final int pWidth = 600; /* allPoont*30*30 = pW*pH */
+    private final int pHeight = 600;
+    private final int dotSize = 30;
+    private final int delay = 200;
+    private SpriteDictionary spriteDictionary;
 
-    }
     public GamePanel(){
-        setBackground(Color.black);
+        spriteDictionary = new SpriteDictionary();
+        setBackground(Color.white);
         setFocusable(true);
         setPreferredSize(new Dimension(pWidth, pHeight));
         addKeyListener(new KAdapter());
@@ -30,7 +28,10 @@ public class GamePanel extends JPanel implements ActionListener {
         timer = new Timer(delay, this);
         timer.start();
     }
-
+    private void SetImage(){
+        food = spriteDictionary.Sprites.get(game.Buff.name);
+        snake = new ImageIcon(getClass().getResource("Sprite/circle.png")).getImage();
+    }
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -39,6 +40,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void Draw(Graphics g) {
         if (!game.CheckOnEatSelf()){
+            System.out.println(game.Snake);
             g.drawImage(food, game.Buff.x * dotSize,  game.Buff.y * dotSize, this);
             for(Point point : game.Snake)
                 g.drawImage(snake, point.x * dotSize,point.y * dotSize, this);
@@ -52,7 +54,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private void gameMassage(Graphics g, String msg) {
         Font small = new Font("Helvetica", Font.BOLD, 40);
         FontMetrics metr = getFontMetrics(small);
-        g.setColor(Color.white);
+        g.setColor(Color.BLACK);
         g.setFont(small);
         g.drawString(msg, (pWidth - metr.stringWidth(msg)) / 2, pHeight / 2);
     }
@@ -61,6 +63,7 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         game.RefreshField();
+        SetImage();
         repaint();
     }
 

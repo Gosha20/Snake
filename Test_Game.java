@@ -106,22 +106,22 @@ public class Test_Game {
         }
     }
 
-    @Test
-    public void test_correct_eating_1(){
-        GameModel game = new GameModel(6,6);
-        game.Set_Course("UP");
-
-        game.Buff.x = game.Snake.get(0).x;//это корректно, что х и у перепутаны местами или я запутался?
-        game.Buff.y = game.Snake.get(0).y-1;
-        int sLength = game.SnakeLength;
-        int prevScore = game.Score;
-        game.RefreshField();
-
-        assertFalse(game.Buff == new Point(game.Snake.get(0).x,game.Snake.get(0).y-1));
-                                // /проверка на съеденную еду и зареспавненную в др. точке
-        assertEquals(game.SnakeLength,sLength+1);
-        assertNotEquals(game.Score, prevScore);
-    }
+//    @Test
+//    public void test_correct_eating_1(){
+//        GameModel game = new GameModel(6,6);
+//        game.Set_Course("UP");
+//
+//        game.Buff.x = game.Snake.get(0).x;//это корректно, что х и у перепутаны местами или я запутался?
+//        game.Buff.y = game.Snake.get(0).y-1;
+//        int sLength = game.SnakeLength;
+//        int prevScore = game.Score;
+//        game.RefreshField();
+//
+//        assertFalse(game.Buff == new Point(game.Snake.get(0).x,game.Snake.get(0).y-1));
+//                                // /проверка на съеденную еду и зареспавненную в др. точке
+//        assertEquals(game.SnakeLength,sLength+1);
+//        assertNotEquals(game.Score, prevScore);
+//    }
 
     @Test
     public void test_reverse_direction(){
