@@ -1,4 +1,4 @@
-package Snake;
+package Snake.Model;
 
 import java.awt.*;
 import java.util.HashMap;

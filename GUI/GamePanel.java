@@ -1,5 +1,6 @@
-package Snake;
+package Snake.GUI;
 
+import Snake.Model.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JPanel;

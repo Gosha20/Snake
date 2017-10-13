@@ -1,11 +1,6 @@
 package Snake;
-
-import javax.swing.*;
-import java.awt.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Stack;
+import Snake.Model.GameModel;
+import Snake.GUI.*;
 
 public class Program {
     public static void main (String [] args) {
