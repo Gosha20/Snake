@@ -11,16 +11,14 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private Image food ;
     private Image snake ;
-    private static GameModel game = new GameModel(20, 20);
+    private static GameModel game = new GameModel(20, 20,3);
     private Timer timer;
     private final int pWidth = 600; /* allPoont*30*30 = pW*pH */
     private final int pHeight = 600;
     private final int dotSize = 30;
     private final int delay = 200;
-    private SpriteDictionary spriteDictionary;
 
     public GamePanel(){
-        spriteDictionary = new SpriteDictionary();
         setBackground(Color.white);
         setFocusable(true);
         setPreferredSize(new Dimension(pWidth, pHeight));
@@ -30,8 +28,7 @@ public class GamePanel extends JPanel implements ActionListener {
         timer.start();
     }
     private void SetImage(){
-        food = spriteDictionary.Sprites.get(game.Buff.name);
-        snake = new ImageIcon(getClass().getResource("Sprite/circle.png")).getImage();
+        snake = new ImageIcon(getClass().getResource("circle.png")).getImage();
     }
     @Override
     public void paintComponent(Graphics g) {
@@ -40,10 +37,9 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void Draw(Graphics g) {
-        if (!game.CheckOnEatSelf()){
-            System.out.println(game.Snake);
-            g.drawImage(food, game.Buff.x * dotSize,  game.Buff.y * dotSize, this);
-            for(Point point : game.Snake)
+        if (!(game.CheckOnEatSelf() || (game.LittleSnakeLength()))){
+            g.drawImage(game.Buff.Image, game.Buff.x * dotSize,  game.Buff.y * dotSize, this);
+            for(Point point : game.Snake.Snake)
                 g.drawImage(snake, point.x * dotSize,point.y * dotSize, this);
             Toolkit.getDefaultToolkit().sync();
         }
@@ -74,16 +70,16 @@ public class GamePanel extends JPanel implements ActionListener {
             int key = e.getKeyCode();
             switch (key) {
                 case KeyEvent.VK_DOWN:
-                    game.Set_Course("DOWN");
+                    game.Snake.SetCourse(Course.DOWN);
                     break;
                 case KeyEvent.VK_UP:
-                    game.Set_Course("UP");
+                    game.Snake.SetCourse(Course.UP);
                     break;
                 case KeyEvent.VK_LEFT:
-                    game.Set_Course("LEFT");
+                    game.Snake.SetCourse(Course.LEFT);
                     break;
                 case KeyEvent.VK_RIGHT:
-                    game.Set_Course("RIGHT");
+                    game.Snake.SetCourse(Course.RIGHT);
                     break;
                 case KeyEvent.VK_SPACE:
                     timer.stop();

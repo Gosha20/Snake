@@ -10,8 +10,8 @@ public class SpriteDictionary {
 
     public SpriteDictionary(){
         this.Sprites = new HashMap<String,Image>();
-        this.Sprites.put("apple", new ImageIcon(getClass().getResource("Sprite/apple.png")).getImage());
-        this.Sprites.put("poison", new ImageIcon(getClass().getResource("Sprite/poison.png")).getImage());
-        this.Sprites.put("banan", new ImageIcon(getClass().getResource("Sprite/banan.png")).getImage());
+        this.Sprites.put("apple", new ImageIcon(getClass().getResource("apple.png")).getImage());
+        this.Sprites.put("poison", new ImageIcon(getClass().getResource("poison.png")).getImage());
+        this.Sprites.put("banan", new ImageIcon(getClass().getResource("banan.png")).getImage());
     }
 }

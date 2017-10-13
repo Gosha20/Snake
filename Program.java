@@ -5,7 +5,7 @@ import Snake.GUI.*;
 public class Program {
     public static void main (String [] args) {
         new Form();
-        GameModel game = new GameModel(5 ,5);
+//        GameModel game = new GameModel(5 ,5);
 //        for (int i = 0; i< 100 ; i++){
 //            System.out.println(game.Snake);
 //            game.Print();

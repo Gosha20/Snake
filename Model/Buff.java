@@ -1,11 +1,15 @@
 package Snake.Model;
-public class Buff {
 
+import javax.swing.*;
+import java.awt.*;
+
+public class Buff {
     public String name;
     public int countScore;
     public int timeLive;
     public int x;
     public int y;
+    public Image Image;
 
     public Buff(String name, int countScore, int timeLive){
         this.name = name;
@@ -13,5 +17,6 @@ public class Buff {
         this.timeLive = timeLive;
         x=0;
         y=0;
+        Image = new ImageIcon(getClass().getResource( name + ".png")).getImage();
     }
 }
