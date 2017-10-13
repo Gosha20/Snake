@@ -9,12 +9,11 @@ import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    private Image food ;
     private Image snake ;
     private static GameModel game = new GameModel(20, 20,3);
     private Timer timer;
     private final int pWidth = 600; /* allPoont*30*30 = pW*pH */
-    private final int pHeight = 600;
+    private final int pHeight = 630;
     private final int dotSize = 30;
     private final int delay = 200;
 

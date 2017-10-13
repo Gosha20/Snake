@@ -11,7 +11,7 @@ public class GameModel {
     public int Score;
     public ArrayList<Buff> Buffs = new ArrayList<>();
     public Snake Snake;
-
+    private int timeLiveBuff;
     public GameModel(int h, int w, int snakeLength){
         Snake = new Snake(snakeLength);
         existBuff = false;
@@ -21,12 +21,14 @@ public class GameModel {
         SpawnFood();
     }
     public void RefreshField(){
+        timeLiveBuff--;
+        if (timeLiveBuff <= 0)
+            existBuff = false;
         CheckOnEatBuff();
         Snake.Move();
         CheckOnOutBoard();
         CheckOnEatSelf();
         SpawnFood();
-
     }
 
     public void Print(){
@@ -53,19 +55,19 @@ public class GameModel {
     private void SpawnFood(){
         Random rnd = new Random();
         int n = rnd.nextInt(Buffs.size());
-
-           while (!existBuff){
+      while (!existBuff){
+           int x = rnd.nextInt(height);
+           int y = rnd.nextInt(width);
+           Point tempBuff = new Point(x,y);
+           if (!Snake.Snake.contains(tempBuff))
+           {
                Buff = Buffs.get(n);
-               int x = rnd.nextInt(height);
-               int y = rnd.nextInt(width);
-               Point tempBuff = new Point(x,y);
-               if (!Snake.Snake.contains(tempBuff))
-               {
-                   Buff.x = tempBuff.x;
-                   Buff.y = tempBuff.y;
-                   existBuff = true;
-               }
+               Buff.x = tempBuff.x;
+               Buff.y = tempBuff.y;
+               existBuff = true;
+               timeLiveBuff = Buff.timeLive;
            }
+       }
     }
     public void CheckOnOutBoard(){
         Point head = Snake.GetHead();
@@ -87,6 +89,7 @@ public class GameModel {
             existBuff = false;
         }
     }
+
     public boolean CheckOnEatSelf(){
         Point snakeHead = Snake.GetHead();
         for (int i = 1; i<Snake.SnakeLength;i++){
@@ -95,11 +98,13 @@ public class GameModel {
         }
         return false;
     }
+
     public boolean LittleSnakeLength(){
         if (Snake.SnakeLength < 2)
             return true;
         return false;
     }
+
     private void Set_Buffs(){
         Buff apple = new Buff("apple", 1, 10);
         Buff poison = new Buff("poison", -1, 20);
