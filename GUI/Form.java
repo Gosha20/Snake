@@ -3,9 +3,9 @@ package Snake.GUI;
 import javax.swing.*;
 
 public class Form extends JFrame {
-    public Form() {
+    public Form(int gH,int gW) {
         setTitle("Snake");
-        add(new GamePanel());
+        add(new GamePanel(gH,gW));
         pack();
         setLocationRelativeTo(null);
         setResizable(false);

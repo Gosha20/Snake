@@ -6,28 +6,29 @@ import java.awt.event.*;
 import javax.swing.JPanel;
 import javax.swing.*;
 import javax.swing.Timer;
-
 public class GamePanel extends JPanel implements ActionListener {
 
-    private Image snake ;
-    private static GameModel game = new GameModel(20, 20,3);
+    private Image snakeImage;
+    private static GameModel game;
     private Timer timer;
-    private final int pWidth = 600; /* allPoont*30*30 = pW*pH */
-    private final int pHeight = 630;
+    private  int panelWidth ; /* allPoont*30*30 = pW*pH */
+    private  int panelHeight;
     private final int dotSize = 30;
-    private final int delay = 200;
-
-    public GamePanel(){
+    private int delay = 400;
+    public GamePanel(int h, int w){
+        game = new GameModel(20, 20,3);
+        panelHeight = (int)(Math.sqrt((double)(h*w*dotSize*dotSize))) + 30;
+        panelWidth = (int)(Math.sqrt((double)(h*w*dotSize*dotSize)));
         setBackground(Color.white);
         setFocusable(true);
-        setPreferredSize(new Dimension(pWidth, pHeight));
+        setPreferredSize(new Dimension(panelWidth, panelHeight));
         addKeyListener(new KAdapter());
         SetImage();
         timer = new Timer(delay, this);
         timer.start();
     }
     private void SetImage(){
-        snake = new ImageIcon(getClass().getResource("circle.png")).getImage();
+        snakeImage = new ImageIcon(getClass().getResource("circle.png")).getImage();
     }
     @Override
     public void paintComponent(Graphics g) {
@@ -39,28 +40,26 @@ public class GamePanel extends JPanel implements ActionListener {
         if (!(game.CheckOnEatSelf() || (game.LittleSnakeLength()))){
             g.drawImage(game.Buff.Image, game.Buff.x * dotSize,  game.Buff.y * dotSize, this);
             for(Point point : game.Snake.Snake)
-                g.drawImage(snake, point.x * dotSize,point.y * dotSize, this);
+                g.drawImage(snakeImage, point.x * dotSize,point.y * dotSize, this);
             Toolkit.getDefaultToolkit().sync();
         }
         else {
-            gameMassage(g, "Game Over!");
             timer.stop();
+            DialogExeptions.CloseWindowMsg("Score: "+game.Score,"Game Over!");
+
         }
     }
-    private void gameMassage(Graphics g, String msg) {
-        Font small = new Font("Helvetica", Font.BOLD, 40);
-        FontMetrics metr = getFontMetrics(small);
-        g.setColor(Color.BLACK);
-        g.setFont(small);
-        g.drawString(msg, (pWidth - metr.stringWidth(msg)) / 2, pHeight / 2);
-    }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        timer.stop();
         game.RefreshField();
         SetImage();
         repaint();
+        if (delay > 60 && game.Score / 20 !=0)
+        {delay -=20;
+            timer = new Timer(delay, this);}
+        timer.start();
     }
 
     private class KAdapter extends KeyAdapter {

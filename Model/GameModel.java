@@ -12,6 +12,7 @@ public class GameModel {
     public ArrayList<Buff> Buffs = new ArrayList<>();
     public Snake Snake;
     private int timeLiveBuff;
+    public int Speed;
     public GameModel(int h, int w, int snakeLength){
         Snake = new Snake(snakeLength);
         existBuff = false;
@@ -20,6 +21,7 @@ public class GameModel {
         Set_Buffs();
         SpawnFood();
     }
+
     public void RefreshField(){
         timeLiveBuff--;
         if (timeLiveBuff <= 0)
@@ -106,11 +108,13 @@ public class GameModel {
     }
 
     private void Set_Buffs(){
-        Buff apple = new Buff("apple", 1, 10);
+        Buff apple = new Buff("apple", 1, 20);
         Buff poison = new Buff("poison", -1, 20);
-        Buff banan = new Buff("banan", 3, 7);
+        Buff banan = new Buff("banan", 3, 15);
+        Buff grapes = new Buff("grapes", 5,15);
         Buffs.add(apple);
         Buffs.add(banan);
         Buffs.add(poison);
+        Buffs.add(grapes);
     }
 }
