@@ -45,6 +45,7 @@ public class Snake {
             prev_segment = next_segment;
         }
     }
+
     public void SetCourse(Point course) {
         if (!(course.x + pCourse.x == 0 && course.y + pCourse.y == 0))
             pCourse = course;

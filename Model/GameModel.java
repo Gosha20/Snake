@@ -13,6 +13,7 @@ public class GameModel {
     public Snake Snake;
     private int timeLiveBuff;
     public int Speed;
+
     public GameModel(int h, int w, int snakeLength){
         Snake = new Snake(snakeLength);
         existBuff = false;
