@@ -5,14 +5,14 @@ import java.util.*;
 
 public class GameModel {
     public Buff Buff;
-    public int height;
-    public int width;
-    public boolean existBuff;
+    final int height;
+    final int width;
+    boolean existBuff;
     public int Score;
-    public ArrayList<Buff> Buffs = new ArrayList<>();
+    private static ArrayList<Buff> Buffs = new ArrayList<>();
     public Snake Snake;
     private int timeLiveBuff;
-    public int Speed;
+    public boolean gameOver = false;
 
     public GameModel(int h, int w, int snakeLength){
         Snake = new Snake(snakeLength);
@@ -31,6 +31,7 @@ public class GameModel {
         Snake.Move();
         CheckOnOutBoard();
         CheckOnEatSelf();
+        LittleSnakeLength();
         SpawnFood();
     }
 
@@ -73,7 +74,7 @@ public class GameModel {
        }
     }
 
-    public void CheckOnOutBoard(){
+    private void CheckOnOutBoard(){
         Point head = Snake.GetHead();
         if (head.x > width)
             head.x = 0;
@@ -85,7 +86,7 @@ public class GameModel {
             head.y = height-1;
     }
 
-    public void CheckOnEatBuff(){
+    private void CheckOnEatBuff(){
         if (Snake.GetHead().x == Buff.x && Snake.GetHead().y == Buff.y)
         {
             Score += Buff.countScore;
@@ -94,19 +95,17 @@ public class GameModel {
         }
     }
 
-    public boolean CheckOnEatSelf(){
+    private void CheckOnEatSelf(){
         Point snakeHead = Snake.GetHead();
         for (int i = 1; i<Snake.SnakeLength;i++){
             if (snakeHead.x == Snake.Snake.get(i).x && snakeHead.y == Snake.Snake.get(i).y)
-                return true;
+                gameOver = true;
         }
-        return false;
     }
 
-    public boolean LittleSnakeLength(){
+    void LittleSnakeLength(){
         if (Snake.SnakeLength < 2)
-            return true;
-        return false;
+            gameOver = true;
     }
 
     private void Set_Buffs(){

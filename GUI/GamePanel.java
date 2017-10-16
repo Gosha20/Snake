@@ -11,14 +11,13 @@ public class GamePanel extends JPanel implements ActionListener {
     private Image snakeImage;
     private static GameModel game;
     private Timer timer;
-    private  int panelWidth ; /* allPoont*30*30 = pW*pH */
-    private  int panelHeight;
     private final int dotSize = 30;
     private int delay = 400;
-    public GamePanel(int h, int w){
+
+    GamePanel(int h, int w){
         game = new GameModel(20, 20,3);
-        panelHeight = (int)(Math.sqrt((double)(h*w*dotSize*dotSize))) + 30;
-        panelWidth = (int)(Math.sqrt((double)(h*w*dotSize*dotSize)));
+        int panelHeight = (int) (Math.sqrt((double) (h * w * dotSize * dotSize))) + 30;
+        int panelWidth = (int) (Math.sqrt((double) (h * w * dotSize * dotSize)));
         setBackground(Color.white);
         setFocusable(true);
         setPreferredSize(new Dimension(panelWidth, panelHeight));
@@ -27,9 +26,11 @@ public class GamePanel extends JPanel implements ActionListener {
         timer = new Timer(delay, this);
         timer.start();
     }
+
     private void SetImage(){
         snakeImage = new ImageIcon(getClass().getResource("circle.png")).getImage();
     }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -37,16 +38,16 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void Draw(Graphics g) {
-        if (!(game.CheckOnEatSelf() || (game.LittleSnakeLength()))){
-            g.drawImage(game.Buff.Image, game.Buff.x * dotSize,  game.Buff.y * dotSize, this);
+        if (game.gameOver){
+            timer.stop();
+            ExceptionsHandler.CloseWindowMsg("Score: "+game.Score,"Game Over!");
+            System.exit(1);
+        }
+        else {
+            g.drawImage(game.Buff.getImage(), game.Buff.getX() * dotSize,  game.Buff.getY() * dotSize, this);
             for(Point point : game.Snake.Snake)
                 g.drawImage(snakeImage, point.x * dotSize,point.y * dotSize, this);
             Toolkit.getDefaultToolkit().sync();
-        }
-        else {
-            timer.stop();
-            ExceptionsHandler.CloseWindowMsg("Score: "+game.Score,"Game Over!");
-
         }
     }
 
@@ -57,9 +58,10 @@ public class GamePanel extends JPanel implements ActionListener {
         SetImage();
         repaint();
         if (delay > 60 && game.Score / 20 !=0)
-        {delay -=20;
+        {
+			delay -=20;
             timer = new Timer(delay, this);}
-        timer.start();
+			timer.start();
     }
 
     private class KAdapter extends KeyAdapter {

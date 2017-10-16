@@ -4,8 +4,8 @@ import java.util.Stack;
 
 public class Snake {
     public Stack<Point> Snake = new Stack<>();
-    public Point pCourse;
-    public int SnakeLength;
+    private Point pCourse;
+    int SnakeLength;
 
     public Snake(int size){
         for (int i = 0; i < size;i++){
@@ -15,7 +15,7 @@ public class Snake {
         SnakeLength = Snake.size();
     }
 
-    public void EatBuff(Buff buff){
+    void EatBuff(Buff buff){
         if (buff.countScore > 0){
             for (int i = 0; i < buff.countScore;i++ )
             {
@@ -33,7 +33,7 @@ public class Snake {
         }
     }
 
-    public void Move(){
+    void Move(){
         Point prev_segment;
         Point next_segment;
         prev_segment = Snake.get(0);
@@ -52,5 +52,5 @@ public class Snake {
             pCourse = course;
     }
 
-    public Point GetHead(){return Snake.get(0);}
+    Point GetHead(){return Snake.get(0);}
 }
