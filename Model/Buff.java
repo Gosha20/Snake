@@ -15,8 +15,9 @@ public class Buff {
         this.name = name;
         this.countScore = countScore;
         this.timeLive = timeLive;
-        x=0;
-        y=0;
-        Image = new ImageIcon(getClass().getResource( name + ".png")).getImage();
+        this.x=0;
+        this.y=0;
+        this.Image = new ImageIcon(getClass().getResource( name + ".png")).getImage();
     }
+
 }

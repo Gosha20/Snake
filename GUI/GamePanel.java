@@ -45,7 +45,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         else {
             timer.stop();
-            DialogExeptions.CloseWindowMsg("Score: "+game.Score,"Game Over!");
+            ExceptionsHandler.CloseWindowMsg("Score: "+game.Score,"Game Over!");
 
         }
     }

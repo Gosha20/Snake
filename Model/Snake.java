@@ -14,6 +14,7 @@ public class Snake {
         pCourse = Course.DOWN;
         SnakeLength = Snake.size();
     }
+
     public void EatBuff(Buff buff){
         if (buff.countScore > 0){
             for (int i = 0; i < buff.countScore;i++ )

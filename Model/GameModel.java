@@ -72,6 +72,7 @@ public class GameModel {
            }
        }
     }
+
     public void CheckOnOutBoard(){
         Point head = Snake.GetHead();
         if (head.x > width)

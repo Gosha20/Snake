@@ -74,7 +74,7 @@ public class StartForm extends JFrame{
                     dispose();
                 } catch (Exception exeption)
                 {
-                    DialogExeptions.Massage("Argument exeption", "Error");
+                    ExceptionsHandler.Message("Argument exeption", "Error");
                 }
             }
         });
