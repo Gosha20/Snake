@@ -21,7 +21,8 @@ public class Snake {
             {
                 Point t1 = Snake.get(SnakeLength-1);
                 Point t2 = Snake.get(SnakeLength-2);
-                Snake.add(new Point(2*t1.x-t2.x,2*t1.y-t2.y));
+                Snake.add(new Point(-1,-1));
+//                Snake.add(new Point(2*t1.x-t2.x,2*t1.y-t2.y));
                 SnakeLength++;
             }
         }

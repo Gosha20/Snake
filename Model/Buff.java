@@ -10,7 +10,6 @@ public class Buff {
     int x;
     int y;
     private final Image Image;
-
     public int getX() {
         return x;
     }
@@ -31,6 +30,4 @@ public class Buff {
         this.y=0;
         this.Image = new ImageIcon(getClass().getResource( name + ".png")).getImage();
     }
-
-
 }

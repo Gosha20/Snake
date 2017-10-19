@@ -13,11 +13,18 @@ public class GamePanel extends JPanel implements ActionListener {
     private Timer timer;
     private final int dotSize = 30;
     private int delay = 400;
+    private int scoreHeight ;
+    private int scoreWidth;
+    private String playerName;
 
-    GamePanel(int h, int w){
-        game = new GameModel(20, 20,3);
-        int panelHeight = (int) (Math.sqrt((double) (h * w * dotSize * dotSize))) + 30;
+    GamePanel(int h, int w,String name){
+        playerName = name;
+        game = new GameModel(h, w,3);
+        int panelHeight = (int) (Math.sqrt((double) (h * w * dotSize * dotSize)));
         int panelWidth = (int) (Math.sqrt((double) (h * w * dotSize * dotSize)));
+        scoreHeight = (int)(panelHeight*0.15);
+        scoreWidth = panelWidth;
+        panelHeight += scoreHeight;
         setBackground(Color.white);
         setFocusable(true);
         setPreferredSize(new Dimension(panelWidth, panelHeight));
@@ -36,17 +43,30 @@ public class GamePanel extends JPanel implements ActionListener {
         super.paintComponent(g);
         Draw(g);
     }
+    private void drawScorePanel(Graphics g){
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, scoreWidth, scoreHeight);
+        g.setColor(Color.GREEN);
+        Font font = new Font("Tahoma", Font.BOLD|Font.ITALIC, (int)(scoreHeight*0.3));
+        g.setFont(font);
+        g.drawString("Player: "+playerName, 5, (int)(scoreHeight*0.3));
+        g.drawString("Game Mode: ", 5, (int)(scoreHeight*0.75));
+        g.drawString("Score: "+ game.Score, (int)(scoreWidth*0.65), (int)(scoreHeight*0.75));
+        g.drawString("Speed: " + delay, (int)(scoreWidth*0.65), (int)(scoreHeight*0.3));
 
+    }
     private void Draw(Graphics g) {
         if (game.gameOver){
             timer.stop();
             ExceptionsHandler.CloseWindowMsg("Score: "+game.Score,"Game Over!");
+            ScoreHandler.writeScore(playerName,game.Score);
             System.exit(1);
         }
         else {
-            g.drawImage(game.Buff.getImage(), game.Buff.getX() * dotSize,  game.Buff.getY() * dotSize, this);
+            drawScorePanel(g);
+            g.drawImage(game.Buff.getImage(), game.Buff.getX() * dotSize,  game.Buff.getY() * dotSize + scoreHeight , this);
             for(Point point : game.Snake.Snake)
-                g.drawImage(snakeImage, point.x * dotSize,point.y * dotSize, this);
+                g.drawImage(snakeImage, point.x * dotSize,point.y * dotSize + scoreHeight, this);
             Toolkit.getDefaultToolkit().sync();
         }
     }
@@ -57,11 +77,11 @@ public class GamePanel extends JPanel implements ActionListener {
         game.RefreshField();
         SetImage();
         repaint();
-        if (delay > 60 && game.Score / 20 !=0)
-        {
-			delay -=20;
-            timer = new Timer(delay, this);}
-			timer.start();
+        if (delay > 60) {
+            delay -= 0;
+            timer = new Timer(delay, this);
+        }
+        timer.start();
     }
 
     private class KAdapter extends KeyAdapter {

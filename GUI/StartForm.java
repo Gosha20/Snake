@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 
 public class StartForm extends JFrame{
     private JTextField name = new JTextField("Player1");
-    private JTextField width= new JTextField("20");
-    private JTextField height= new JTextField("20");
+    private JTextField width= new JTextField("10");
+    private JTextField height= new JTextField("10");
     private JTextField mode= new JTextField("classic");
 
     public StartForm()
@@ -70,7 +70,8 @@ public class StartForm extends JFrame{
 
                     int GameHeight = Integer.parseInt(height.getText());
                     int GameWight = Integer.parseInt(width.getText());
-                    new Form(GameHeight, GameWight);
+
+                    new Form(new GamePanel(GameHeight,GameWight,name.getText()));
                     dispose();
                 } catch (Exception exeption)
                 {
