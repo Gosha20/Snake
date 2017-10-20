@@ -3,12 +3,10 @@ package Snake.GUI;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class StartForm extends JFrame{
     private JTextField name = new JTextField("Player1");
-    private JTextField width= new JTextField("10");
-    private JTextField height= new JTextField("10");
-    private JTextField mode= new JTextField("classic");
 
     public StartForm()
     {
@@ -31,32 +29,35 @@ public class StartForm extends JFrame{
         name.setLocation(85,10);
         name.setSize(50,20);
 
-        JLabel LabelH = new JLabel("SizeH:");
-        Panel.add(LabelH);
-        LabelH.setLocation(15,50);
-        LabelH.setSize(65,10);
+        JLabel Size = new JLabel("Size:");
+        Panel.add(Size);
+        Size.setLocation(15,40);
+        Size.setSize(65,10);
 
-        Panel.add(height);
-        height.setLocation(85,45);
-        height.setSize(30,20);
+        JComboBox comboBoxSize = new JComboBox();
+        comboBoxSize.addItem("20x20");
+        comboBoxSize.addItem("15x15");
+        comboBoxSize.addItem("10x10");
+        comboBoxSize.setSelectedIndex(0);
 
-        JLabel LabelW = new JLabel("SizeW:");
-        Panel.add(LabelW);
-        LabelW.setLocation(15,85);
-        LabelW.setSize(65,10);
+        Panel.add(comboBoxSize);
+        comboBoxSize.setLocation(50,37);
+        comboBoxSize.setSize(40,16);
 
-        Panel.add(width);
-        width.setLocation(85,80);
-        width.setSize(30,20);
 
         JLabel LabelMode = new JLabel("Game mode:");
         Panel.add(LabelMode);
         LabelMode.setLocation(15,120);
         LabelMode.setSize(75,10);
 
-        Panel.add(mode);
-        mode.setLocation(100,115);
-        mode.setSize(50,20);
+        JComboBox comboBoxMode = new JComboBox();
+        comboBoxMode.addItem("Classic");
+        comboBoxMode.addItem("Castom");
+        comboBoxMode.setSelectedIndex(0);
+
+        Panel.add(comboBoxMode);
+        comboBoxMode.setLocation(90,115);
+        comboBoxMode.setSize(60,20);
 
         JButton StartGame = new JButton("Start Game");
         Panel.add(StartGame);
@@ -67,11 +68,11 @@ public class StartForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-
-                    int GameHeight = Integer.parseInt(height.getText());
-                    int GameWight = Integer.parseInt(width.getText());
-
-                    new Form(new GamePanel(GameHeight,GameWight,name.getText()));
+                    String[] size = comboBoxSize.getSelectedItem().toString().split("x");
+                    int GameSizeH = Integer.parseInt(size[0]);
+                    int GameSizeW = Integer.parseInt(size[1]);
+                    String gameMode = (String)comboBoxMode.getSelectedItem();
+                    new Form(new GamePanel(GameSizeH,GameSizeW,name.getText()));
                     dispose();
                 } catch (Exception exeption)
                 {
