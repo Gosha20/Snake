@@ -7,6 +7,7 @@ public class Snake {
     private Point pCourse;
     int SnakeLength;
 
+    public Point getCourse(){return pCourse;}
     public Snake(int size){
         for (int i = 0; i < size;i++){
             Snake.add(new Point(i, 0 ));
