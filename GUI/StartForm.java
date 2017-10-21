@@ -13,7 +13,7 @@ public class StartForm extends JFrame{
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-        setSize(300,300);
+        setSize(200,200);
         setLocationRelativeTo(null);
 
         JPanel Panel = new JPanel(null);
@@ -46,7 +46,7 @@ public class StartForm extends JFrame{
 
         JLabel LabelMode = new JLabel("Game mode:");
         Panel.add(LabelMode);
-        LabelMode.setLocation(15,120);
+        LabelMode.setLocation(15,60);
         LabelMode.setSize(75,10);
 
         JComboBox comboBoxMode = new JComboBox();
@@ -55,12 +55,12 @@ public class StartForm extends JFrame{
         comboBoxMode.setSelectedIndex(0);
 
         Panel.add(comboBoxMode);
-        comboBoxMode.setLocation(90,115);
-        comboBoxMode.setSize(60,20);
+        comboBoxMode.setLocation(90,58);
+        comboBoxMode.setSize(60,17);
 
         JButton StartGame = new JButton("Start Game");
         Panel.add(StartGame);
-        StartGame.setLocation(100,200);
+        StartGame.setLocation(50,100);
         StartGame.setSize(100,20);
 
         StartGame.addActionListener(new ActionListener() {

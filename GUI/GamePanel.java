@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void SetImage(){
         snakeImage = new ImageIcon(getClass().getResource("circle.png")).getImage();
-        wallImage = new ImageIcon(getClass().getResource("circle.png")).getImage();
+        wallImage = new ImageIcon(getClass().getResource("well.png")).getImage();
     }
 
     @Override
