@@ -1,49 +1,63 @@
 package Snake.Model;
 
 import java.awt.*;
-import java.util.*;
-import Snake.Model.*;
+import java.util.ArrayList;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class Test_Game {
-    GameModel game = new GameModel(20,21, 3, "classic");
+    GameModel game = new GameModel(20,21, 4, "classic");
 
     @Test
-    public void test_correct_hw() {
+    public void test_GameModel_initialization()
+    {
         assertEquals(game.height, 20);
         assertEquals(game.width, 21);
-        assertEquals(game.existBuff, true);
-
+        assertEquals(game.Snake.SnakeLength, 4);
+        assertEquals(game.mode, "classic");
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_wrong_initalization() {
+         GameModel game = new GameModel(-1,-5, 3, "classic");
+    }
+
     @Test
     public void test_exist_Snake() {
         assertNotNull(game.Snake);
     }
 
-//    @Test
-//    public void test_correct_Course(){
-//        assertNotNull(game.pCourse);
-//    }
-//
-//    @Test
-//    public void test_Score(){
-//        assertEquals(game.Score, 0);
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void test_initialization_1() {
-//         GameModel game = new GameModel(0,0);
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void test_initialization_2(){
-//         GameModel game = new GameModel(-5,-1001);
-//    }
-//
-//    @Test
-//    public void test_initialization_3(){ GameModel game = new GameModel('k', 'a');  }
-//
+    @Test
+    public void test_Score_initialization(){
+        assertEquals(game.Score, 0);
+    }
+
+    @Test
+    public void test_initalization_SpawnFood_method(){
+        assertNotNull(game.Buff);
+    }
+
+    @Test
+    public void test_SpawnFood_method_in_game(){
+        game.walls.add(new Point(game.Buff.x, game.Buff.y));
+        game.existBuff = false;
+
+        game.RefreshField();
+
+        assertTrue(game.existBuff);
+    }
+
+    @Test
+    public void test_spawn_walls_method(){
+        GameModel game = new GameModel(10,10, 3, "unusual");
+        assertNotNull(game.walls);
+        String n = game.walls.get(0).getClass().getName();
+        assertTrue(game.walls.getClass().getName() == "java.util.ArrayList");
+        assertTrue(game.walls.get(0).getClass().getName() == "java.awt.Point");
+    }
+
+
 //    @Test
 //    public void test_Snake_head_setting_1(){
 //        GameModel game_1 = new GameModel(1,7);
@@ -67,15 +81,6 @@ public class Test_Game {
 //                return;
 //            else fail("Snake is too close to the boundaries");
 //        }
-//    }
-//
-//    @Test
-//    public void test_SpawnFood(){
-//        game.existBuff = false;
-//
-//        game.RefreshField();
-//
-//        assertTrue(game.existBuff);
 //    }
 //
 //    @Test
