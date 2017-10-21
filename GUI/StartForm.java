@@ -51,7 +51,7 @@ public class StartForm extends JFrame{
 
         JComboBox comboBoxMode = new JComboBox();
         comboBoxMode.addItem("Classic");
-        comboBoxMode.addItem("Castom");
+        comboBoxMode.addItem("unusual");
         comboBoxMode.setSelectedIndex(0);
 
         Panel.add(comboBoxMode);
@@ -71,10 +71,11 @@ public class StartForm extends JFrame{
                     int GameSizeH = Integer.parseInt(size[0]);
                     int GameSizeW = Integer.parseInt(size[1]);
                     String gameMode = comboBoxMode.getSelectedItem().toString();
-                    new Form(new GamePanel(GameSizeH,GameSizeW,name.getText()));
+                    new Form(new GamePanel(GameSizeH,GameSizeW,name.getText(), gameMode));
                     dispose();
                 } catch (Exception exeption)
                 {
+                    System.out.println(exeption);
                     ExceptionsHandler.Message("Argument exeption", "Error");
                 }
             }

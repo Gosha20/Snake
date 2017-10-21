@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.*;
 import javax.swing.Timer;
 public class GamePanel extends JPanel implements ActionListener {
-
+    private Image wallImage;
     private Image snakeImage;
     private static GameModel game;
     private Timer timer;
@@ -17,9 +17,9 @@ public class GamePanel extends JPanel implements ActionListener {
     private int scoreWidth;
     private String playerName;
 
-    GamePanel(int h, int w,String name){
+    GamePanel(int h, int w,String name, String mode){
         playerName = name;
-        game = new GameModel(h, w,3);
+        game = new GameModel(h, w,3, mode);
         int panelHeight = (int) (Math.sqrt((double) (h * w * dotSize * dotSize)));
         int panelWidth = (int) (Math.sqrt((double) (h * w * dotSize * dotSize)));
         scoreHeight = (int)(panelHeight*0.15);
@@ -36,6 +36,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void SetImage(){
         snakeImage = new ImageIcon(getClass().getResource("circle.png")).getImage();
+        wallImage = new ImageIcon(getClass().getResource("circle.png")).getImage();
     }
 
     @Override
@@ -50,9 +51,9 @@ public class GamePanel extends JPanel implements ActionListener {
         Font font = new Font("Tahoma", Font.BOLD|Font.ITALIC, (int)(scoreHeight*0.3));
         g.setFont(font);
         g.drawString("Player: "+playerName, 5, (int)(scoreHeight*0.3));
-        g.drawString("Game Mode: ", 5, (int)(scoreHeight*0.75));
+        g.drawString("Game Mode: " + game.mode, 5, (int)(scoreHeight*0.75));
         g.drawString("Score: "+ game.Score, (int)(scoreWidth*0.65), (int)(scoreHeight*0.75));
-        g.drawString("Speed: " + delay, (int)(scoreWidth*0.65), (int)(scoreHeight*0.3));
+        g.drawString("Speed: " + (400-delay), (int)(scoreWidth*0.65), (int)(scoreHeight*0.3));
 
     }
     private void Draw(Graphics g) {
@@ -67,6 +68,8 @@ public class GamePanel extends JPanel implements ActionListener {
             g.drawImage(game.Buff.getImage(), game.Buff.getX() * dotSize,  game.Buff.getY() * dotSize + scoreHeight , this);
             for(Point point : game.Snake.Snake)
                 g.drawImage(snakeImage, point.x * dotSize,point.y * dotSize + scoreHeight, this);
+            for(Point wall : game.walls)
+                g.drawImage(wallImage, wall.x * dotSize,wall.y * dotSize + scoreHeight, this);
             Toolkit.getDefaultToolkit().sync();
         }
     }

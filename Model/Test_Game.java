@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class Test_Game {
-    GameModel game = new GameModel(20,21, 3);
+    GameModel game = new GameModel(20,21, 3, "classic");
 
     @Test
     public void test_correct_hw() {

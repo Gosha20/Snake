@@ -17,13 +17,17 @@ public class GameModel {
     public Snake Snake;
     private int timeLiveBuff;
     public boolean gameOver = false;
+    public ArrayList<Point> walls = new ArrayList<>();
+    public String mode;
 
-    public GameModel(int h, int w, int snakeLength){
-        Snake = new Snake(snakeLength);
-        existBuff = false;
+    public GameModel(int h, int w, int snakeLength, String mode){
+        this.Snake = new Snake(snakeLength);
+        this.existBuff = false;
         this.height = h;
         this.width = w;
+        this.mode = mode;
         SpawnFood();
+        spawnWalls(mode);
     }
 
     public void RefreshField(){
@@ -34,6 +38,7 @@ public class GameModel {
         Snake.Move();
         CheckOnOutBoard();
         CheckOnEatSelf();
+        checkOnWall();
         LittleSnakeLength();
         SpawnFood();
     }
@@ -66,7 +71,7 @@ public class GameModel {
            int x = rnd.nextInt(height);
            int y = rnd.nextInt(width);
            Point tempBuff = new Point(x,y);
-           if (!Snake.Snake.contains(tempBuff))
+           if (!Snake.Snake.contains(tempBuff) && !walls.contains(tempBuff))
            {
                Buff = Buffs[n];
                Buff.x = tempBuff.x;
@@ -76,7 +81,12 @@ public class GameModel {
            }
        }
     }
+    void checkOnWall()
+    {
+        if (walls.contains(Snake.GetHead()))
+            gameOver = true;
 
+    }
     private void CheckOnOutBoard(){
         Point head = Snake.GetHead();
         if (head.x > width)
@@ -105,7 +115,21 @@ public class GameModel {
                 gameOver = true;
         }
     }
-
+    void spawnWalls(String mode){
+        if (mode.equals("unusual")){
+            Random rnd = new Random();
+            for (int i = 0; i < height; i++){
+                int x = rnd.nextInt(height);
+                int y = rnd.nextInt(width);
+                Point tempWall = new Point(x,y);
+                if (!Snake.Snake.contains(tempWall))
+                {
+                    walls.add(tempWall);
+                }
+                else i-=1;
+                }
+        }
+    }
     void LittleSnakeLength(){
         if (Snake.SnakeLength < 2)
             gameOver = true;
