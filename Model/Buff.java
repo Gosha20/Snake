@@ -14,6 +14,10 @@ public class Buff {
         return x;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getY() {
         return y;
     }

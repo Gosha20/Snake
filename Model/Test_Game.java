@@ -131,7 +131,6 @@ public class Test_Game {
         assertNotEquals(game.Score, prevScore);
     }
 
-
     @Test
     public void test_reverse_direction_DOWN() {
         Point original = game.Snake.getCourse();
@@ -176,7 +175,49 @@ public class Test_Game {
         game.Snake.SetCourse(Course.RIGHT);
         assertEquals("The course should not change on the opposite", game.Snake.getCourse(), original);
     }//не спрашивай зачем 4 раза почти одно и тоже, препод сказал сделать это
-    
+
+    @Test
+    public void test_CheckOnOutBoard_method_1(){
+        game.Snake.SetCourse(Course.DOWN);
+
+        while(game.Snake.GetHead().y != game.height - 1)
+            game.RefreshField();
+        game.RefreshField();
+
+        assertFalse(game.gameOver);
+    }
+
+    @Test
+    public void test_CheckOnOutBoard_method_2(){
+        game.Snake.SetCourse(Course.LEFT);
+
+        while(game.Snake.GetHead().x != 0)
+            game.RefreshField();
+        game.RefreshField();
+
+        assertFalse(game.gameOver);
+    }
+
+    @Test
+    public void test_CheckOnWall_method(){
+        game.Snake.SetCourse(Course.DOWN);
+        game.walls.add(new Point(game.Snake.GetHead().x, game.Snake.GetHead().y + 1));
+
+        game.RefreshField();
+
+        assertTrue(game.gameOver);
+    }
+
+    @Test
+    public void test_Refresh_method_1(){
+        Point prevHead = game.Snake.GetHead();
+
+        game.RefreshField();
+
+        assertNotEquals(prevHead, game.Snake.GetHead());
+        Point suggestedPoint = new Point(prevHead.x + game.Snake.pCourse.x, prevHead.y + game.Snake.pCourse.y);
+        assertEquals(game.Snake.GetHead(),suggestedPoint);
+    }
 }
 
 

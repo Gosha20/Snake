@@ -4,13 +4,13 @@ import java.util.Stack;
 
 public class Snake {
     public Stack<Point> Snake = new Stack<>();
-    private Point pCourse;
+    protected Point pCourse;
     int SnakeLength;
 
     public Point getCourse(){return pCourse;}
     public Snake(int size){
         for (int i = 0; i < size;i++){
-            Snake.add(new Point(i, 0 ));
+            Snake.add(new Point(5 + i, 5 ));
         }
         pCourse = Course.DOWN;
         SnakeLength = Snake.size();
