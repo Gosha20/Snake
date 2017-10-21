@@ -9,7 +9,11 @@ public class GameModel {
     final int width;
     boolean existBuff;
     public int Score;
-    private static ArrayList<Buff> Buffs = new ArrayList<>();
+    private static Buff[] Buffs = new Buff[]{
+                                new Buff("apple", 1, 20),
+                                new Buff("poison", -1, 20),
+                                new Buff("banan", 3, 15),
+                                new Buff("grapes", 5,15)};
     public Snake Snake;
     private int timeLiveBuff;
     public boolean gameOver = false;
@@ -19,7 +23,6 @@ public class GameModel {
         existBuff = false;
         this.height = h;
         this.width = w;
-        Set_Buffs();
         SpawnFood();
     }
 
@@ -58,14 +61,14 @@ public class GameModel {
 
     private void SpawnFood(){
         Random rnd = new Random();
-        int n = rnd.nextInt(Buffs.size());
+        int n = rnd.nextInt(Buffs.length);
       while (!existBuff){
            int x = rnd.nextInt(height);
            int y = rnd.nextInt(width);
            Point tempBuff = new Point(x,y);
            if (!Snake.Snake.contains(tempBuff))
            {
-               Buff = Buffs.get(n);
+               Buff = Buffs[n];
                Buff.x = tempBuff.x;
                Buff.y = tempBuff.y;
                existBuff = true;
@@ -106,16 +109,5 @@ public class GameModel {
     void LittleSnakeLength(){
         if (Snake.SnakeLength < 2)
             gameOver = true;
-    }
-
-    private void Set_Buffs(){
-        Buff apple = new Buff("apple", 1, 20);
-        Buff poison = new Buff("poison", -1, 20);
-        Buff banan = new Buff("banan", 3, 15);
-        Buff grapes = new Buff("grapes", 5,15);
-        Buffs.add(apple);
-        Buffs.add(banan);
-        Buffs.add(poison);
-        Buffs.add(grapes);
     }
 }

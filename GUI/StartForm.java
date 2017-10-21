@@ -70,7 +70,7 @@ public class StartForm extends JFrame{
                     String[] size = comboBoxSize.getSelectedItem().toString().split("x");
                     int GameSizeH = Integer.parseInt(size[0]);
                     int GameSizeW = Integer.parseInt(size[1]);
-                    String gameMode = (String)comboBoxMode.getSelectedItem();
+                    String gameMode = comboBoxMode.getSelectedItem().toString();
                     new Form(new GamePanel(GameSizeH,GameSizeW,name.getText()));
                     dispose();
                 } catch (Exception exeption)
