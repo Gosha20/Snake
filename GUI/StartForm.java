@@ -3,7 +3,6 @@ package Snake.GUI;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class StartForm extends JFrame{
     private JTextField name = new JTextField("Player1");
