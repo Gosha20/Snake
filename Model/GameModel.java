@@ -58,7 +58,7 @@ public class GameModel {
                     }
                 }
                 else{
-                    if (Snake.Snake.contains(cp)){
+                    if (Snake.body.contains(cp)){
                         if (cp.x == Snake.GetHead().x && cp.y == Snake.GetHead().y)
                             System.out.print("S");
                         else
@@ -81,7 +81,7 @@ public class GameModel {
            int x = rnd.nextInt(height);
            int y = rnd.nextInt(width);
            Point tempBuff = new Point(x,y);
-           if (!Snake.Snake.contains(tempBuff) && !walls.contains(tempBuff))
+           if (!Snake.body.contains(tempBuff) && !walls.contains(tempBuff))
            {
                Buff = Buffs[n];
                Buff.x = tempBuff.x;
@@ -121,7 +121,7 @@ public class GameModel {
     private void CheckOnEatSelf(){
         Point snakeHead = Snake.GetHead();
         for (int i = 1; i<Snake.SnakeLength;i++){
-            if (snakeHead.x == Snake.Snake.get(i).x && snakeHead.y == Snake.Snake.get(i).y)
+            if (snakeHead.x == Snake.body.get(i).x && snakeHead.y == Snake.body.get(i).y)
                 gameOver = true;
         }
     }
@@ -132,7 +132,7 @@ public class GameModel {
                 int x = rnd.nextInt(height);
                 int y = rnd.nextInt(width);
                 Point tempWall = new Point(x,y);
-                if (!Snake.Snake.contains(tempWall))
+                if (!Snake.body.contains(tempWall))
                 {
                     walls.add(tempWall);
                 }

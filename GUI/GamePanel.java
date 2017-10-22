@@ -8,7 +8,8 @@ import javax.swing.*;
 import javax.swing.Timer;
 public class GamePanel extends JPanel implements ActionListener {
     private Image wallImage;
-    private Image snakeImage;
+    private Image snakeImageHead;
+    private Image snakeImageBody;
     private static GameModel game;
     private Timer timer;
     private final int dotSize = 30;
@@ -35,7 +36,8 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void SetImage(){
-        snakeImage = new ImageIcon(getClass().getResource("circle.png")).getImage();
+        snakeImageHead = new ImageIcon(getClass().getResource("snakehead.png")).getImage();
+        snakeImageBody = new ImageIcon(getClass().getResource("snakebody.png")).getImage();
         wallImage = new ImageIcon(getClass().getResource("well.png")).getImage();
     }
 
@@ -66,8 +68,10 @@ public class GamePanel extends JPanel implements ActionListener {
         else {
             drawScorePanel(g);
             g.drawImage(game.Buff.getImage(), game.Buff.getX() * dotSize,  game.Buff.getY() * dotSize + scoreHeight , this);
-            for(Point point : game.Snake.Snake)
-                g.drawImage(snakeImage, point.x * dotSize,point.y * dotSize + scoreHeight, this);
+            g.drawImage(snakeImageHead,game.Snake.GetHead().x* dotSize,game.Snake.GetHead().y* dotSize+ scoreHeight,this);
+            for(int i = 1; i< game.Snake.getSnakeLength();i++)
+                g.drawImage(snakeImageBody, game.Snake.body.get(i).x * dotSize,game.Snake.body.get(i).y * dotSize + scoreHeight, this);
+
             for(Point wall : game.walls)
                 g.drawImage(wallImage, wall.x * dotSize,wall.y * dotSize + scoreHeight, this);
             Toolkit.getDefaultToolkit().sync();

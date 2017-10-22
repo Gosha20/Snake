@@ -36,11 +36,14 @@ public class ScoreForm extends JFrame {
     }
     public void paint(Graphics g) {
         int y = 0;
+        int number = 1;
         g.drawRect(10,31 ,230,160);
         for (Map.Entry<String, Integer> entry  : map.entrySet()) {
             if (y<140){
-                g.drawString(entry.getKey() + " " + entry.getValue(),30,50+y);
-                y+=20;}
+                g.drawString(number+")"+entry.getKey() + " " + entry.getValue(),30,50+y);
+                y+=20;
+                number+=1;
+            }
             }
     }
 }

@@ -3,34 +3,35 @@ import java.awt.*;
 import java.util.Stack;
 
 public class Snake {
-    public Stack<Point> Snake = new Stack<>();
+    public Stack<Point> body = new Stack<>();
     Point pCourse;
     int SnakeLength;
 
     Point getCourse(){return pCourse;}
+    public int getSnakeLength(){return SnakeLength;}
 
     public Snake(int size){
         for (int i = 0; i < size;i++){
-            Snake.add(new Point(5 + i, 5 ));
+            body.add(new Point(5 + i, 5 ));
         }
         pCourse = Course.DOWN;
-        SnakeLength = Snake.size();
+        SnakeLength = body.size();
     }
 
     void EatBuff(Buff buff){
         if (buff.countScore > 0){
             for (int i = 0; i < buff.countScore;i++ )
             {
-                Point t1 = Snake.get(SnakeLength-1);
-                Point t2 = Snake.get(SnakeLength-2);
-                Snake.add(new Point(-1,-1));
+                Point t1 = body.get(SnakeLength-1);
+                Point t2 = body.get(SnakeLength-2);
+                body.add(new Point(-1,-1));
 //                Snake.add(new Point(2*t1.x-t2.x,2*t1.y-t2.y));
                 SnakeLength++;
             }
         }
         else{
             for (int i = 0; i > buff.countScore; i--){
-                Snake.pop();
+                body.pop();
                 SnakeLength+=buff.countScore;
             }
         }
@@ -39,13 +40,13 @@ public class Snake {
     void Move(){
         Point prev_segment;
         Point next_segment;
-        prev_segment = Snake.get(0);
-        int x = Snake.get(0).x + pCourse.x;
-        int y = Snake.get(0).y + pCourse.y;
-        Snake.set(0, new Point(x, y));
+        prev_segment = body.get(0);
+        int x = body.get(0).x + pCourse.x;
+        int y = body.get(0).y + pCourse.y;
+        body.set(0, new Point(x, y));
         for (int i = 0; i < SnakeLength-1; i++) {
-            next_segment = Snake.get(i + 1);
-            Snake.set(i + 1, prev_segment);
+            next_segment = body.get(i + 1);
+            body.set(i + 1, prev_segment);
             prev_segment = next_segment;
         }
     }
@@ -55,5 +56,5 @@ public class Snake {
             pCourse = course;
     }
 
-    Point GetHead(){return Snake.get(0);}
+    public Point GetHead(){return body.get(0);}
 }

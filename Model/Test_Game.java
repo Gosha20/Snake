@@ -60,8 +60,8 @@ public class Test_Game {
 
     @Test
     public void test_LittleSnakeLenght_method() {
-        while (game.Snake.Snake.size() > 1) {
-            game.Snake.Snake.pop();
+        while (game.Snake.body.size() > 1) {
+            game.Snake.body.pop();
             game.Snake.SnakeLength--;//ненормально то, что я сам должен вычитать после метода pop(). думаю как исправить
         }
 
