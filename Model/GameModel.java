@@ -5,20 +5,20 @@ import java.util.*;
 
 public class GameModel {
     public Buff Buff;
-    final int height;
-    final int width;
-    boolean existBuff;
+    public Snake Snake;
+    public boolean gameOver = false;
+    public ArrayList<Point> walls = new ArrayList<>();
+    public String mode;
     public int Score;
+    private final int height;
+    private final int width;
+    private int timeLiveBuff;
+    boolean existBuff;
     private static Buff[] Buffs = new Buff[]{
                                 new Buff("apple", 1, 20),
                                 new Buff("poison", -1, 20),
                                 new Buff("banan", 3, 15),
                                 new Buff("grapes", 5,15)};
-    public Snake Snake;
-    private int timeLiveBuff;
-    public boolean gameOver = false;
-    public ArrayList<Point> walls = new ArrayList<>();
-    public String mode;
 
     public GameModel(int h, int w, int snakeLength, String mode){
         this.Snake = new Snake(snakeLength);
@@ -48,7 +48,7 @@ public class GameModel {
         {
             for (int j = 0; j < width; j++){
                 Point cp = new Point(j,i);
-                if (cp.x == Buff.getX() && cp.y == Buff.getY()){
+                if (cp.x == Buff.x && cp.y == Buff.y){
                     switch (Buff.getName()){
                         case "apple": System.out.print("a"); break;
                         case "poison": System.out.print("p"); break;
@@ -91,11 +91,10 @@ public class GameModel {
            }
        }
     }
-    void CheckOnWall()
+    private void CheckOnWall()
     {
         if (walls.contains(Snake.GetHead()))
             gameOver = true;
-
     }
     private void CheckOnOutBoard(){
         Point head = Snake.GetHead();
@@ -120,12 +119,12 @@ public class GameModel {
 
     private void CheckOnEatSelf(){
         Point snakeHead = Snake.GetHead();
-        for (int i = 1; i<Snake.SnakeLength;i++){
+        for (int i = 1; i<Snake.body.size();i++){
             if (snakeHead.x == Snake.body.get(i).x && snakeHead.y == Snake.body.get(i).y)
                 gameOver = true;
         }
     }
-    void SpawnWalls(String mode){
+    private void SpawnWalls(String mode){
         if (mode.equals("unusual")){
             Random rnd = new Random();
             for (int i = 0; i < height; i++){
@@ -140,8 +139,15 @@ public class GameModel {
                 }
         }
     }
-    void LittleSnakeLength(){
-        if (Snake.SnakeLength < 2)
+    private void LittleSnakeLength(){
+        if (Snake.body.size() < 2)
             gameOver = true;
+    }
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }

@@ -7,22 +7,12 @@ public class Buff {
     private final String name;
     final int  countScore;
     final int timeLive;
-    int x;
-    int y;
+    public int x;
+    public int y;
     private final Image Image;
-
-    public int getX() {
-        return x;
-    }
-
     public String getName() {
         return name;
     }
-
-    public int getY() {
-        return y;
-    }
-
     public Image getImage() {
         return Image;
     }
