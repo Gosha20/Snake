@@ -6,10 +6,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class ScoreHandler {
-    public static void writeScore(String playerName, int score){
+ class ScoreHandler {
+     static void writeScore(String playerName, int score){
         try(FileWriter writer = new FileWriter("tablescore.txt", true))
         {
             writer.write(playerName+" "+score);
@@ -21,20 +22,35 @@ public class ScoreHandler {
             System.out.println(ex.getMessage());
         }
     }
-    public static int readScore(){
 
+     static int readScore(){
+        List<String> array = null;
+        int highScore = 0;
+        try {
+            array = Files.readAllLines(Paths.get("tablescore.txt"), StandardCharsets.UTF_8);
+            for (String line : array) {
+                int score = Integer.parseInt(line.split(" ")[1]);
+                if (score > highScore)
+                    highScore = score;
+            }
+        } catch (IOException e) {}
+        return highScore;
+    }
+    static HashMap<String,Integer> scoreMap()
+    {
+        HashMap<String,Integer> result = new HashMap<>();
         List<String> array = null;
         try {
             array = Files.readAllLines(Paths.get("tablescore.txt"), StandardCharsets.UTF_8);
-        } catch (IOException e) {
+            for (String line : array) {
+                Integer score = Integer.parseInt(line.split(" ")[1]);
+                String name = line.split(" ")[0];
+                result.put(name,score);
+            }
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
-        int hightScore = 0;
-        for (String line : array) {
-            int score = Integer.parseInt(line.split(" ")[1]);
-            if (score > hightScore)
-                hightScore = score;
-        }
-        return hightScore;
+        return result;
     }
 }

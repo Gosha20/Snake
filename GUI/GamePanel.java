@@ -59,7 +59,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private void Draw(Graphics g) {
         if (game.gameOver){
             timer.stop();
-            ExceptionsHandler.CloseWindowMsg("Score: "+game.Score,"Game Over!");
+            ExceptionsHandler.CloseWindowMsg("Score: "+game.Score + "\n HighScore: " ,"Game Over!");
             ScoreHandler.writeScore(playerName,game.Score);
             System.exit(1);
         }

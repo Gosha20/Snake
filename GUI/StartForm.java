@@ -63,6 +63,18 @@ public class StartForm extends JFrame{
         StartGame.setLocation(50,100);
         StartGame.setSize(100,20);
 
+        JButton highScore = new JButton("HIGHSCORE");
+        Panel.add(highScore);
+        highScore.setLocation(40,130);
+        highScore.setSize(120,20);
+
+        highScore.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ScoreForm();
+            }
+        });
+
         StartGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
