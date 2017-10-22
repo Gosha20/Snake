@@ -10,6 +10,7 @@ public class Buff {
     int x;
     int y;
     private final Image Image;
+
     public int getX() {
         return x;
     }

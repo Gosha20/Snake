@@ -34,8 +34,8 @@ public class GameModel {
         timeLiveBuff--;
         if (timeLiveBuff <= 0)
             existBuff = false;
-        CheckOnEatBuff();
         Snake.Move();
+        CheckOnEatBuff();
         CheckOnOutBoard();
         CheckOnEatSelf();
         checkOnWall();
@@ -48,7 +48,7 @@ public class GameModel {
         {
             for (int j = 0; j < width; j++){
                 Point cp = new Point(j,i);
-                if (cp.x == Buff.x && cp.y == Buff.y){
+                if (cp.x == Buff.getX() && cp.y == Buff.getY()){
                     switch (Buff.getName()){
                         case "apple": System.out.print("a"); break;
                         case "poison": System.out.print("p"); break;

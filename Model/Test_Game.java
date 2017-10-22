@@ -158,9 +158,8 @@ public class Test_Game {
 
     @Test
     public void test_reverse_direction_RIGHT() {
-        Point original = game.Snake.getCourse();
-
         game.Snake.SetCourse(Course.RIGHT);
+        Point original = game.Snake.getCourse();
         game.RefreshField();
         game.Snake.SetCourse(Course.LEFT);
         assertEquals("The course should not change on the opposite", game.Snake.getCourse(), original);
@@ -168,9 +167,8 @@ public class Test_Game {
 
     @Test
     public void test_reverse_direction_LEFT() {
-        Point original = game.Snake.getCourse();
-
         game.Snake.SetCourse(Course.LEFT);
+        Point original = game.Snake.getCourse();
         game.RefreshField();
         game.Snake.SetCourse(Course.RIGHT);
         assertEquals("The course should not change on the opposite", game.Snake.getCourse(), original);

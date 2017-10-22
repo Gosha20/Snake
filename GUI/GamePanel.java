@@ -31,7 +31,7 @@ public class GamePanel extends JPanel implements ActionListener {
         addKeyListener(new KAdapter());
         SetImage();
         timer = new Timer(delay, this);
-        timer.start();
+        timer.stop();
     }
 
     private void SetImage(){
