@@ -27,7 +27,7 @@ public class GameModel {
         this.width = w;
         this.mode = mode;
         SpawnFood();
-        spawnWalls(mode);
+        SpawnWalls(mode);
     }
 
     public void RefreshField(){
@@ -38,7 +38,7 @@ public class GameModel {
         CheckOnEatBuff();
         CheckOnOutBoard();
         CheckOnEatSelf();
-        checkOnWall();
+        CheckOnWall();
         LittleSnakeLength();
         SpawnFood();
     }
@@ -91,7 +91,7 @@ public class GameModel {
            }
        }
     }
-    void checkOnWall()
+    void CheckOnWall()
     {
         if (walls.contains(Snake.GetHead()))
             gameOver = true;
@@ -125,7 +125,7 @@ public class GameModel {
                 gameOver = true;
         }
     }
-    void spawnWalls(String mode){
+    void SpawnWalls(String mode){
         if (mode.equals("unusual")){
             Random rnd = new Random();
             for (int i = 0; i < height; i++){
