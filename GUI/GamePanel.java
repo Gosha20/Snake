@@ -77,11 +77,12 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         timer.stop();
+        int curScore = game.Score;
         game.RefreshField();
         SetImage();
         repaint();
-        if (delay > 60) {
-            delay -= 0;
+        if (delay > 60 && curScore != game.Score) {
+            delay -= (game.Score-curScore)*5;
             timer = new Timer(delay, this);
         }
         timer.start();
