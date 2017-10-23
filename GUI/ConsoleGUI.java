@@ -14,11 +14,10 @@ public class ConsoleGUI extends GameModel {
 
 
     public static void main(String[] args){
-        ConsoleGUI game = new ConsoleGUI(10, 10, 3, "classic");
+        ConsoleGUI game = new ConsoleGUI(10, 10, 3, "unusual4");
         Scanner scanner = new Scanner(System.in);
         while(!game.gameOver){
             game.Print();
-//            game.Print();
             int course = scanner.nextInt();
             switch (course){
                 case 8: game.Snake.SetCourse(Course.UP); break;
