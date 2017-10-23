@@ -43,36 +43,6 @@ public class GameModel {
         SpawnFood();
     }
 
-    public void Print(){
-        for (int i = 0; i < height; i++)
-        {
-            for (int j = 0; j < width; j++){
-                Point cp = new Point(j,i);
-                if (cp.x == Buff.x && cp.y == Buff.y){
-                    switch (Buff.getName()){
-                        case "apple": System.out.print("a"); break;
-                        case "poison": System.out.print("p"); break;
-                        case "banan": System.out.print("b"); break;
-                        case "grapes": System.out.print("g"); break;
-                        default:System.out.print("o"); break;
-                    }
-                }
-                else{
-                    if (Snake.body.contains(cp)){
-                        if (cp.x == Snake.GetHead().x && cp.y == Snake.GetHead().y)
-                            System.out.print("S");
-                        else
-                            System.out.print("s");}
-                    else{
-                        if (walls.contains(cp))
-                            System.out.print("#");
-                        else System.out.print(".");
-                    }
-                }
-            }
-            System.out.println();
-        }
-    }
 
     private void SpawnFood(){
         Random rnd = new Random();
