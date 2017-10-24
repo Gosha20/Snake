@@ -6,13 +6,15 @@ import java.awt.event.*;
 import javax.swing.JPanel;
 import javax.swing.*;
 import javax.swing.Timer;
+
+import static Snake.Constants.*;
+
 public class GamePanel extends JPanel implements ActionListener {
-    private Image wallImage;
-    private Image snakeImageHead;
-    private Image snakeImageBody;
+    private Image wallImage = new ImageIcon(getClass().getResource("well.png")).getImage();
+    private Image snakeImageHead ;
+    private Image snakeImageBody = new ImageIcon(getClass().getResource("snakebody.png")).getImage();
     private static GameModel game;
     private Timer timer;
-    private final int dotSize = 30;
     private int delay = 400;
     private int scoreHeight ;
     private int scoreWidth;
@@ -30,16 +32,14 @@ public class GamePanel extends JPanel implements ActionListener {
         setFocusable(true);
         setPreferredSize(new Dimension(panelWidth, panelHeight));
         addKeyListener(new KAdapter());
-        SetImage();
+        SetImageHead();
         timer = new Timer(delay, this);
         timer.stop();
     }
 
-    private void SetImage(){
+    private void SetImageHead(){
         Point course = game.Snake.getpCourse();
         snakeImageHead = new ImageIcon(getClass().getResource(course.x+""+course.y+".png")).getImage();
-        snakeImageBody = new ImageIcon(getClass().getResource("snakebody.png")).getImage();
-        wallImage = new ImageIcon(getClass().getResource("well.png")).getImage();
     }
 
     @Override
@@ -98,10 +98,10 @@ public class GamePanel extends JPanel implements ActionListener {
         timer.stop();
         int curScore = game.Score;
         game.RefreshField();
-        SetImage();
+        SetImageHead();
         repaint();
         if (delay > 60 && curScore != game.Score) {
-            delay -= (game.Score-curScore)*5;
+            delay -= (game.Score-curScore)*speedCoef;
             timer = new Timer(delay, this);
         }
         timer.start();

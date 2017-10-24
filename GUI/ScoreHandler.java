@@ -1,5 +1,7 @@
 package Snake.GUI;
 
+import Snake.Constants;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -11,7 +13,7 @@ import java.util.List;
 
  class ScoreHandler {
      static void writeScore(String playerName, int score){
-        try(FileWriter writer = new FileWriter("tablescore.txt", true))
+        try(FileWriter writer = new FileWriter(Constants.fileName, true))
         {
             writer.write(playerName+" "+score);
             writer.append("\n");
@@ -27,7 +29,7 @@ import java.util.List;
         List<String> array = null;
         int highScore = 0;
         try {
-            array = Files.readAllLines(Paths.get("tablescore.txt"), StandardCharsets.UTF_8);
+            array = Files.readAllLines(Paths.get(Constants.fileName), StandardCharsets.UTF_8);
             for (String line : array) {
                 int score = Integer.parseInt(line.split(" ")[1]);
                 if (score > highScore)
@@ -41,7 +43,7 @@ import java.util.List;
         HashMap<String,Integer> result = new HashMap<>();
         List<String> array = null;
         try {
-            array = Files.readAllLines(Paths.get("tablescore.txt"), StandardCharsets.UTF_8);
+            array = Files.readAllLines(Paths.get(Constants.fileName), StandardCharsets.UTF_8);
             for (String line : array) {
                 Integer score = Integer.parseInt(line.split(" ")[1]);
                 String name = line.split(" ")[0];

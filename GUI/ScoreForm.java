@@ -1,5 +1,7 @@
 package Snake.GUI;
 
+import Snake.Constants;
+
 import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.Array;
@@ -35,13 +37,11 @@ public class ScoreForm extends JFrame {
                 ));
     }
     public void paint(Graphics g) {
-        int y = 0;
         int number = 1;
         g.drawRect(10,31 ,230,160);
         for (Map.Entry<String, Integer> entry  : map.entrySet()) {
-            if (y<140){
-                g.drawString(number+")"+entry.getKey() + " " + entry.getValue(),30,50+y);
-                y+=20;
+            if (number< Constants.topCount){
+                g.drawString(number+")"+entry.getKey() + " " + entry.getValue(),30,30+number*20);
                 number+=1;
             }
             }

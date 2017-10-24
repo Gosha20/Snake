@@ -1,5 +1,6 @@
 package Snake.Model;
 
+import Snake.Constants;
 import java.awt.*;
 import java.util.*;
 
@@ -18,7 +19,8 @@ public class GameModel {
                                 new Buff("apple", 1, 20),
                                 new Buff("poison", -1, 20),
                                 new Buff("banan", 3, 15),
-                                new Buff("grapes", 5,15)};
+                                new Buff("grapes", 5,15),
+                                new Buff("granat", 7,10)};
 
     public GameModel(int h, int w, int snakeLength, String mode){
         this.Snake = new Snake(snakeLength);
@@ -35,11 +37,10 @@ public class GameModel {
         if (timeLiveBuff <= 0)
             existBuff = false;
         Snake.Move();
-        CheckOnEatBuff();
-        CheckOnOutBoard();
-        CheckOnEatSelf();
-        CheckOnWall();
-        LittleSnakeLength();
+        eatBuff();
+        fixHeadPosition();
+        if (CheckOnEatSelf() || CheckOnWall() || checkOnLittleSnakeSize())
+            gameOver = true;
         SpawnFood();
     }
 
@@ -91,24 +92,24 @@ public class GameModel {
            }
        }
     }
-    private void CheckOnWall()
+    private boolean CheckOnWall()
     {
-        if (walls.contains(Snake.GetHead()))
-            gameOver = true;
+        return walls.contains(Snake.GetHead());
     }
-    private void CheckOnOutBoard(){
+
+    private void fixHeadPosition(){
         Point head = Snake.GetHead();
-        if (head.x > width)
+        if (head.x >= width)
             head.x = 0;
         if (head.x < 0)
             head.x = width-1;
-        if (head.y > height)
+        if (head.y >= height)
             head.y = 0;
         if (head.y < 0)
             head.y = height-1;
     }
 
-    private void CheckOnEatBuff(){
+    private void eatBuff(){
         if (Snake.GetHead().x == Buff.x && Snake.GetHead().y == Buff.y)
         {
             Score += Buff.countScore;
@@ -117,32 +118,32 @@ public class GameModel {
         }
     }
 
-    private void CheckOnEatSelf(){
+    private boolean CheckOnEatSelf(){
         Point snakeHead = Snake.GetHead();
         for (int i = 1; i<Snake.body.size();i++){
             if (snakeHead.x == Snake.body.get(i).x && snakeHead.y == Snake.body.get(i).y)
-                gameOver = true;
+                return true;
         }
+        return false;
+
     }
     private void SpawnWalls(String mode){
         if (mode.equals("unusual")){
             Random rnd = new Random();
             for (int i = 0; i < height; i++){
-                int x = rnd.nextInt(height);
+                Point tempWall;
+                do {int x = rnd.nextInt(height);
                 int y = rnd.nextInt(width);
-                Point tempWall = new Point(x,y);
-                if (!Snake.body.contains(tempWall))
-                {
+                tempWall = new Point(x,y);}
+                while (Snake.body.contains(tempWall));
                     walls.add(tempWall);
-                }
-                else i-=1;
                 }
         }
     }
-    private void LittleSnakeLength(){
-        if (Snake.body.size() < 2)
-            gameOver = true;
+    private boolean checkOnLittleSnakeSize(){
+        return Snake.body.size() < Constants.minSnakeSize;
     }
+
     public int getHeight() {
         return height;
     }
