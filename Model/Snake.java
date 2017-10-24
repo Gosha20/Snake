@@ -5,6 +5,7 @@ import java.util.Stack;
 public class Snake {
     public Stack<Point> body = new Stack<>();
     private Point pCourse;
+//    Point SnakeSpawnPlace = new Point(5,5);
     public Point getpCourse(){return pCourse;}
     public Point GetHead(){return body.get(0);}
 
@@ -13,6 +14,19 @@ public class Snake {
             body.add(new Point(0, i));
         }
         pCourse = Course.RIGHT;
+    }
+
+    public Snake(int x, int y,int size, Point spawnplace) {
+        if (!spawnplace.equals(Course.LEFT)) {
+            for (int i = 0; i < size; i++) {
+                body.add(new Point(x + i, y));
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                body.add(new Point(x - i, y));
+            }
+        }
+        pCourse = spawnplace;
     }
 
     void EatBuff(Buff buff){
