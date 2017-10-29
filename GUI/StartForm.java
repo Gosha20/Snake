@@ -22,15 +22,15 @@ public class StartForm extends JFrame{
         JLabel LabelNamePlayer = new JLabel("Your name:");
         Panel.add(LabelNamePlayer);
         LabelNamePlayer.setLocation(15,15);
-        LabelNamePlayer.setSize(65,10);
+        LabelNamePlayer.setSize(90,10);
 
         Panel.add(name);
-        name.setLocation(85,10);
-        name.setSize(50,20);
+        name.setLocation(90,10);
+        name.setSize(80,20);
 
         JLabel Size = new JLabel("Size:");
         Panel.add(Size);
-        Size.setLocation(15,40);
+        Size.setLocation(52,40);
         Size.setSize(65,10);
 
         JComboBox comboBoxSize = new JComboBox();
@@ -40,32 +40,31 @@ public class StartForm extends JFrame{
         comboBoxSize.setSelectedIndex(0);
 
         Panel.add(comboBoxSize);
-        comboBoxSize.setLocation(50,37);
-        comboBoxSize.setSize(50,16);
-
+        comboBoxSize.setLocation(90,35);
+        comboBoxSize.setSize(80,20);
 
         JLabel LabelMode = new JLabel("Game mode:");
         Panel.add(LabelMode);
-        LabelMode.setLocation(15,60);
+        LabelMode.setLocation(8,65);
         LabelMode.setSize(75,10);
 
         JComboBox comboBoxMode = new JComboBox();
-        comboBoxMode.addItem("classic");
-        comboBoxMode.addItem("unusual");
+        comboBoxMode.addItem("Classic");
+        comboBoxMode.addItem("Unusual");
         comboBoxMode.setSelectedIndex(0);
 
         Panel.add(comboBoxMode);
-        comboBoxMode.setLocation(90,58);
-        comboBoxMode.setSize(65,17);
+        comboBoxMode.setLocation(90,60);
+        comboBoxMode.setSize(80,20);
 
         JButton StartGame = new JButton("Start Game");
         Panel.add(StartGame);
-        StartGame.setLocation(50,100);
+        StartGame.setLocation(43,100);
         StartGame.setSize(100,20);
 
         JButton highScore = new JButton("HIGHSCORE");
         Panel.add(highScore);
-        highScore.setLocation(40,130);
+        highScore.setLocation(33,130);
         highScore.setSize(120,20);
 
         highScore.addActionListener(new ActionListener() {
