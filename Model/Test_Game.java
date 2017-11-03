@@ -3,7 +3,6 @@ package Snake.Model;
 import java.awt.*;
 import java.util.Stack;
 
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -94,7 +93,7 @@ public class Test_Game {
     @Test
     public void test_CheckOnEatSelf_gameover() {
         GameModel game = new GameModel(15, 15, 6, "classic");
-        if (game.Snake.getpCourse().equals(Course.UP))
+        if (game.Snake.getpCourseHead().equals(Course.UP))
             game.Snake.SetCourse(Course.LEFT);
 
         game.Snake.SetCourse(Course.DOWN);
@@ -113,8 +112,8 @@ public class Test_Game {
     public void test_correct_eating() {
         GameModel game = new GameModel(6, 6, 3, "classic");
         game.Snake.SetCourse(Course.DOWN);
-        game.Buff.x = game.Snake.GetHead().x + game.Snake.getpCourse().x;
-        game.Buff.y = game.Snake.GetHead().y + game.Snake.getpCourse().y;
+        game.Buff.x = game.Snake.GetHead().x + game.Snake.getpCourseHead().x;
+        game.Buff.y = game.Snake.GetHead().y + game.Snake.getpCourseHead().y;
         int sLength = game.Snake.body.size();
         int prevScore = game.Score;
         game.RefreshField();
@@ -128,45 +127,45 @@ public class Test_Game {
     @Test
     public void test_reverse_direction_DOWN() {
         game.Snake = new Snake(5,5,3,Course.DOWN);
-        Point original = game.Snake.getpCourse();
+        Point original = game.Snake.getpCourseHead();
 
         game.RefreshField();
         game.Snake.SetCourse(Course.UP);
 
-        assertEquals("The course should not change on the opposite", game.Snake.getpCourse(), original);
+        assertEquals("The course should not change on the opposite", game.Snake.getpCourseHead(), original);
     }
 
     @Test
     public void test_reverse_direction_UP() {
         game.Snake = new Snake(5,5,3,Course.UP);
-        Point original = game.Snake.getpCourse();
+        Point original = game.Snake.getpCourseHead();
 
         game.RefreshField();
         game.Snake.SetCourse(Course.DOWN);
 
-        assertEquals("The course should not change on the opposite", game.Snake.getpCourse(), original);
+        assertEquals("The course should not change on the opposite", game.Snake.getpCourseHead(), original);
     }
 
     @Test
     public void test_reverse_direction_RIGHT() {
         game.Snake = new Snake(5,5,3,Course.RIGHT);
-        Point original = game.Snake.getpCourse();
+        Point original = game.Snake.getpCourseHead();
 
         game.RefreshField();
         game.Snake.SetCourse(Course.LEFT);
 
-        assertEquals("The course should not change on the opposite", game.Snake.getpCourse(), original);
+        assertEquals("The course should not change on the opposite", game.Snake.getpCourseHead(), original);
     }
 
     @Test
     public void test_reverse_direction_LEFT() {
         game.Snake = new Snake(5,5,3,Course.LEFT);
-        Point original = game.Snake.getpCourse();
+        Point original = game.Snake.getpCourseHead();
 
         game.RefreshField();
         game.Snake.SetCourse(Course.RIGHT);
 
-        assertEquals("The course should not change on the opposite", game.Snake.getpCourse(), original);
+        assertEquals("The course should not change on the opposite", game.Snake.getpCourseHead(), original);
     }
 
     @Test
@@ -209,7 +208,7 @@ public class Test_Game {
         game.RefreshField();
 
         assertNotEquals(prevHead, game.Snake.GetHead());
-        Point suggestedPoint = new Point(prevHead.x + game.Snake.getpCourse().x, prevHead.y + game.Snake.getpCourse().y);
+        Point suggestedPoint = new Point(prevHead.x + game.Snake.getpCourseHead().x, prevHead.y + game.Snake.getpCourseHead().y);
         assertEquals(game.Snake.GetHead(),suggestedPoint);
     }
 }

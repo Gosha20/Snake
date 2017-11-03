@@ -4,13 +4,11 @@ import Snake.Constants;
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.Map;
 import java.util.HashMap;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ScoreForm extends JFrame {
     Map<String, Integer> map;

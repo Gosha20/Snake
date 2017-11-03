@@ -4,16 +4,15 @@ import java.util.Stack;
 
 public class Snake {
     public Stack<Point> body = new Stack<>();
-    private Point pCourse;
-//    Point SnakeSpawnPlace = new Point(5,5);
-    public Point getpCourse(){return pCourse;}
+    private Point pCourseHead;
+    public Point getpCourseHead(){return pCourseHead;}
     public Point GetHead(){return body.get(0);}
 
     public Snake(int size){
         for (int i = 0; i < size;i++){
             body.add(new Point(0, i));
         }
-        pCourse = Course.RIGHT;
+        pCourseHead = Course.RIGHT;
     }
 
     public Snake(int x, int y,int size, Point spawnplace) {
@@ -26,7 +25,7 @@ public class Snake {
                 body.add(new Point(x - i, y));
             }
         }
-        pCourse = spawnplace;
+        pCourseHead = spawnplace;
     }
 
     void EatBuff(Buff buff){
@@ -50,8 +49,8 @@ public class Snake {
         Point prev_segment;
         Point next_segment;
         prev_segment = body.get(0);
-        int x = body.get(0).x + pCourse.x;
-        int y = body.get(0).y + pCourse.y;
+        int x = body.get(0).x + pCourseHead.x;
+        int y = body.get(0).y + pCourseHead.y;
         body.set(0, new Point(x, y));
         for (int i = 0; i < body.size()-1; i++) {
             next_segment = body.get(i + 1);
@@ -61,7 +60,27 @@ public class Snake {
     }
 
     public void SetCourse(Point course) {
-        if (!(course.x + pCourse.x == 0 && course.y + pCourse.y == 0))
-            pCourse = course;
+        if (!(course.x + pCourseHead.x == 0 && course.y + pCourseHead.y == 0))
+            pCourseHead = course;
+    }
+    public Point getTail (){
+        for (int i = body.size()-1; i > 0; i--){
+            if (body.get(i).x != -1 && body.get(i).y != -1)
+                return body.get(i);
+        }
+        return new Point(5,5);
+    }
+    public Point getNextCourseTail (){
+        Point t1 = null;
+        Point t2 = null;
+        for (int i = body.size()-1; i > 0; i--){
+            if (body.get(i).x != -1 && body.get(i).y != -1)
+            {
+                t1 = body.get(i);
+                t2 = body.get(i-1);
+                break;
+            }
+        }
+        return new Point(2*t2.x - t1.x,2*t2.y-t1.y);
     }
 }

@@ -12,6 +12,7 @@ import static Snake.Constants.*;
 public class GamePanel extends JPanel implements ActionListener {
     private Image wallImage = new ImageIcon(getClass().getResource("well.png")).getImage();
     private Image snakeImageHead ;
+    private Image snakeImageTail ;
     private Image snakeImageBody = new ImageIcon(getClass().getResource("snakebody.png")).getImage();
     private static GameModel game;
     private Timer timer;
@@ -32,13 +33,15 @@ public class GamePanel extends JPanel implements ActionListener {
         setFocusable(true);
         setPreferredSize(new Dimension(panelWidth, panelHeight));
         addKeyListener(new KAdapter());
-        SetImageHead();
+        SetImageHeadAndTail();
         timer = new Timer(delay, this);
         timer.stop();
     }
 
-    private void SetImageHead(){
-        Point course = game.Snake.getpCourse();
+    private void SetImageHeadAndTail(){
+        Point course = game.Snake.getpCourseHead();
+        Point courseTail = game.Snake.getNextCourseTail();
+        snakeImageTail = new ImageIcon(getClass().getResource("t"+courseTail.x+courseTail.y+".png")).getImage();
         snakeImageHead = new ImageIcon(getClass().getResource(course.x+""+course.y+".png")).getImage();
     }
 
@@ -61,11 +64,13 @@ public class GamePanel extends JPanel implements ActionListener {
     private void drawSnake(Graphics g)
     {
         g.drawImage(snakeImageHead,game.Snake.GetHead().x* dotSize,game.Snake.GetHead().y* dotSize+ scoreHeight,this);
-        for(int i = 1; i< game.Snake.body.size();i++)
+
+        for(int i = 1; i< game.Snake.body.size()-1;i++)
             g.drawImage(snakeImageBody,
                     game.Snake.body.get(i).x * dotSize,
                     game.Snake.body.get(i).y * dotSize + scoreHeight,
                     this);
+        g.drawImage(snakeImageTail,game.Snake.getTail().x* dotSize,game.Snake.getTail().y* dotSize+ scoreHeight,this);
     }
     private void drawBackground(Graphics g)
     {
@@ -98,7 +103,7 @@ public class GamePanel extends JPanel implements ActionListener {
         timer.stop();
         int curScore = game.Score;
         game.RefreshField();
-        SetImageHead();
+        SetImageHeadAndTail();
         repaint();
         if (delay > 60 && curScore != game.Score) {
             delay -= (game.Score-curScore)*speedCoef;
