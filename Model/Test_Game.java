@@ -211,6 +211,10 @@ public class Test_Game {
         Point suggestedPoint = new Point(prevHead.x + game.Snake.getpCourseHead().x, prevHead.y + game.Snake.getpCourseHead().y);
         assertEquals(game.Snake.GetHead(),suggestedPoint);
     }
+    @Test
+    public void test_Snake_GetTailCourse(){
+        assertEquals(game.Snake.GetHead(),1);
+    }
 }
 
 

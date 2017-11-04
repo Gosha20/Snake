@@ -99,8 +99,8 @@ public class GameModel {
                 return true;
         }
         return false;
-
     }
+
     private void SpawnWalls(String mode){
         if (mode.equals("unusual")){
             Random rnd = new Random();

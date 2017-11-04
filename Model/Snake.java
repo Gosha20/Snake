@@ -1,6 +1,7 @@
 package Snake.Model;
 import java.awt.*;
 import java.util.Stack;
+import java.math.*;
 
 public class Snake {
     public Stack<Point> body = new Stack<>();
@@ -65,7 +66,7 @@ public class Snake {
     }
 
     public Point getTail (){
-        for (int i = body.size()-1; i > 0; i--){
+        for (int i = body.size()-1; i >= 0; i--){
             if (body.get(i).x != -1 && body.get(i).y != -1)
                 return body.get(i);
         }
@@ -73,16 +74,22 @@ public class Snake {
     }
 
     public Point getNextCourseTail (){
-        Point t1 = null;
-        Point t2 = null;
-        for (int i = body.size()-1; i > 0; i--){
+        Point last = new Point(1,0);
+        Point prelast = new Point(1,0);
+        for (int i = body.size()-1; i >= 0; i--){
             if (body.get(i).x != -1 && body.get(i).y != -1)
             {
-                t1 = body.get(i);
-                t2 = body.get(i-1);
+                last = body.get(i);
+                prelast = body.get(i-1);
                 break;
             }
         }
-        return new Point(2*t2.x - t1.x,2*t2.y-t1.y);
+        Point tempPoint = new Point(prelast.x - last.x,prelast.y-last.y);
+        Point course = new Point(0,0);
+        if (tempPoint.x != 0)
+            course.x = (int)(Math.signum(tempPoint.x));
+        if (tempPoint.y != 0)
+            course.y = (int)(Math.signum(tempPoint.y));
+        return course;
     }
 }

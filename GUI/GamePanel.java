@@ -40,8 +40,8 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void SetImageHeadAndTail(){
         Point course = game.Snake.getpCourseHead();
-//        Point courseTail = game.Snake.getNextCourseTail();
-//        snakeImageTail = new ImageIcon(getClass().getResource("t"+courseTail.x+courseTail.y+".png")).getImage();
+        Point courseTail = game.Snake.getNextCourseTail();
+        snakeImageTail = new ImageIcon(getClass().getResource("t"+courseTail.x+""+courseTail.y+".png")).getImage();
         snakeImageHead = new ImageIcon(getClass().getResource(course.x+""+course.y+".png")).getImage();
     }
 
@@ -64,16 +64,16 @@ public class GamePanel extends JPanel implements ActionListener {
     private void drawSnake(Graphics g)
     {
         g.drawImage(snakeImageHead,game.Snake.GetHead().x * dotSize,game.Snake.GetHead().y* dotSize+ scoreHeight,this);
-        for(int i = 1; i< game.Snake.body.size();i++)
+        for(int i = 1; i< game.Snake.body.size()-1; i++)
             g.drawImage(snakeImageBody,
                     game.Snake.body.get(i).x * dotSize,
                     game.Snake.body.get(i).y * dotSize + scoreHeight,
                     this);
-//        g.drawImage(snakeImageTail,game.Snake.getTail().x* dotSize,game.Snake.getTail().y* dotSize+ scoreHeight,this);
+        g.drawImage(snakeImageTail,game.Snake.getTail().x* dotSize,game.Snake.getTail().y* dotSize+ scoreHeight,this);
     }
     private void drawBackground(Graphics g)
     {
-        Image back =new ImageIcon(getClass().getResource( "field.png")).getImage();
+        Image back = new ImageIcon(getClass().getResource( "field.png")).getImage();
         for (int i=0 ; i<game.getHeight();i++)
             for (int j=0 ; j<game.getWidth();j++)
                 g.drawImage(back,j*dotSize,i*dotSize+scoreHeight,this);
@@ -81,11 +81,12 @@ public class GamePanel extends JPanel implements ActionListener {
     private void Draw(Graphics g) {
         if (game.gameOver){
             timer.stop();
-            ExceptionsHandler.CloseWindowMsg("Score: "+game.Score + "\n HighScore: " ,"Game Over!");
+            ExceptionsHandler.CloseWindowMsg("Score: "+game.Score + "\n HighScore: " + ScoreHandler.readScore() ,"Game Over!");
             ScoreHandler.writeScore(playerName,game.Score);
             System.exit(1);
         }
         else {
+            SetImageHeadAndTail();
             drawBackground(g);
             drawScorePanel(g);
             g.drawImage(game.Buff.getImage(),game.Buff.x * dotSize,game.Buff.y * dotSize + scoreHeight,this);
@@ -103,7 +104,6 @@ public class GamePanel extends JPanel implements ActionListener {
         timer.stop();
         int curScore = game.Score;
         game.RefreshField();
-        SetImageHeadAndTail();
         repaint();
         if (delay > 60 && curScore != game.Score) {
             delay -= (game.Score-curScore)*speedCoef;
