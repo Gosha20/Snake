@@ -40,8 +40,8 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void SetImageHeadAndTail(){
         Point course = game.Snake.getpCourseHead();
-        Point courseTail = game.Snake.getNextCourseTail();
-        snakeImageTail = new ImageIcon(getClass().getResource("t"+courseTail.x+courseTail.y+".png")).getImage();
+//        Point courseTail = game.Snake.getNextCourseTail();
+//        snakeImageTail = new ImageIcon(getClass().getResource("t"+courseTail.x+courseTail.y+".png")).getImage();
         snakeImageHead = new ImageIcon(getClass().getResource(course.x+""+course.y+".png")).getImage();
     }
 
@@ -63,14 +63,13 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     private void drawSnake(Graphics g)
     {
-        g.drawImage(snakeImageHead,game.Snake.GetHead().x* dotSize,game.Snake.GetHead().y* dotSize+ scoreHeight,this);
-
-        for(int i = 1; i< game.Snake.body.size()-1;i++)
+        g.drawImage(snakeImageHead,game.Snake.GetHead().x * dotSize,game.Snake.GetHead().y* dotSize+ scoreHeight,this);
+        for(int i = 1; i< game.Snake.body.size();i++)
             g.drawImage(snakeImageBody,
                     game.Snake.body.get(i).x * dotSize,
                     game.Snake.body.get(i).y * dotSize + scoreHeight,
                     this);
-        g.drawImage(snakeImageTail,game.Snake.getTail().x* dotSize,game.Snake.getTail().y* dotSize+ scoreHeight,this);
+//        g.drawImage(snakeImageTail,game.Snake.getTail().x* dotSize,game.Snake.getTail().y* dotSize+ scoreHeight,this);
     }
     private void drawBackground(Graphics g)
     {
@@ -90,6 +89,7 @@ public class GamePanel extends JPanel implements ActionListener {
             drawBackground(g);
             drawScorePanel(g);
             g.drawImage(game.Buff.getImage(),game.Buff.x * dotSize,game.Buff.y * dotSize + scoreHeight,this);
+            g.drawImage(game.enemy.getImage(),game.enemy.x * dotSize,game.enemy.y * dotSize + scoreHeight,this);
             drawSnake(g);
             for(Point wall : game.walls)
                 g.drawImage(wallImage, wall.x * dotSize,wall.y * dotSize + scoreHeight, this);

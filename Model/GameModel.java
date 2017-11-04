@@ -21,6 +21,7 @@ public class GameModel {
                                 new Buff("banan", 3, 15),
                                 new Buff("grapes", 5,15),
                                 new Buff("granat", 7,10)};
+    public Enemy enemy;
 
     public GameModel(int h, int w, int snakeLength, String mode){
         this.Snake = new Snake(snakeLength);
@@ -28,6 +29,7 @@ public class GameModel {
         this.height = h;
         this.width = w;
         this.mode = mode;
+        this.enemy = new Enemy(5,5);
         SpawnFood();
         SpawnWalls(mode);
     }
@@ -37,6 +39,7 @@ public class GameModel {
         if (timeLiveBuff <= 0)
             existBuff = false;
         Snake.Move();
+        enemy.move();
         eatBuff();
         fixHeadPosition();
         if (CheckOnEatSelf() || CheckOnWall() || checkOnLittleSnakeSize())
@@ -48,20 +51,21 @@ public class GameModel {
     private void SpawnFood(){
         Random rnd = new Random();
         int n = rnd.nextInt(Buffs.length);
-      while (!existBuff){
-           int x = rnd.nextInt(height);
-           int y = rnd.nextInt(width);
-           Point tempBuff = new Point(x,y);
-           if (!Snake.body.contains(tempBuff) && !walls.contains(tempBuff))
-           {
+        while (!existBuff){
+            int x = rnd.nextInt(height);
+            int y = rnd.nextInt(width);
+            Point tempBuff = new Point(x,y);
+            if (!Snake.body.contains(tempBuff) && !walls.contains(tempBuff))
+            {
                Buff = Buffs[n];
                Buff.x = tempBuff.x;
                Buff.y = tempBuff.y;
                existBuff = true;
                timeLiveBuff = Buff.timeLive;
-           }
-       }
+            }
+        }
     }
+
     private boolean CheckOnWall()
     {
         return walls.contains(Snake.GetHead());
@@ -102,9 +106,11 @@ public class GameModel {
             Random rnd = new Random();
             for (int i = 0; i < height; i++){
                 Point tempWall;
-                do {int x = rnd.nextInt(height);
-                int y = rnd.nextInt(width);
-                tempWall = new Point(x,y);}
+                do {
+                    int x = rnd.nextInt(height);
+                    int y = rnd.nextInt(width);
+                    tempWall = new Point(x,y);
+                }
                 while (Snake.body.contains(tempWall));
                     walls.add(tempWall);
                 }

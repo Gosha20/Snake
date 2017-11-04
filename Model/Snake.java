@@ -63,6 +63,7 @@ public class Snake {
         if (!(course.x + pCourseHead.x == 0 && course.y + pCourseHead.y == 0))
             pCourseHead = course;
     }
+
     public Point getTail (){
         for (int i = body.size()-1; i > 0; i--){
             if (body.get(i).x != -1 && body.get(i).y != -1)
@@ -70,6 +71,7 @@ public class Snake {
         }
         return new Point(5,5);
     }
+
     public Point getNextCourseTail (){
         Point t1 = null;
         Point t2 = null;
