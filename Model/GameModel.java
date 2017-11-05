@@ -121,16 +121,13 @@ public class GameModel {
         return Snake.body.size() < Constants.minSnakeSize;
     }
 
-    private void collisionWithEnemy() {
-        for (int i=0 ; i<Snake.body.size(); i++)
-        {
-            if ((Snake.body.get(i).x == enemy.x && Snake.body.get(i).y == enemy.y))
-            {
-                for ( int j =0; j<i; j++)
-                      Snake.body.pop();
-            }
+    private void collisionWithEnemy(){
+        for (int i = 0; i < Snake.body.size(); i++)
+            if (Snake.body.get(i).x == enemy.x && Snake.body.get(i).y == enemy.y)
+                for (int j = Snake.body.size() - 1; j >= i; j--)
+                    Snake.body.remove(j);
         }
-    }
+    
     public int getHeight() {
         return height;
     }
