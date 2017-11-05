@@ -4,15 +4,24 @@ import java.awt.*;
 import java.util.Random;
 
 public class Enemy {
+<<<<<<< HEAD
     public int x;
     public int y;
     private Point courseEnemy = new Point(1, 0);
+=======
+    private int x;
+    private int y;
+    private Point courseEnemy = new Point(0, 1);
+    
+    public Point getEnemy(){ return new Point(x, y); }
+>>>>>>> 997ec11f1cf1e194ef53bacbcadfc1a158234444
     public Point getCourseEnemy() { return courseEnemy; }
     
     Enemy(int x, int y) {
         this.x = x;
         this.y = y;
     }
+<<<<<<< HEAD
     void move(int height, int width) {
         if (x+courseEnemy.x<0 || y+courseEnemy.y>=height || y+courseEnemy.y<0 || x+courseEnemy.x>=width)
             courseEnemy = changeCourse();
@@ -21,6 +30,10 @@ public class Enemy {
     }
     Point changeCourse()
     {
+=======
+    
+    void move() {
+>>>>>>> 997ec11f1cf1e194ef53bacbcadfc1a158234444
         Random rnd = new Random();
         int newX = rnd.nextInt(3) - 1;
         int newY = rnd.nextInt(3) - 1;
