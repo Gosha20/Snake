@@ -124,8 +124,6 @@ public class GameModel {
         for (int i = 0; i < Snake.body.size(); i++)
             if (Snake.body.get(i).x == enemy.x && Snake.body.get(i).y == enemy.y)
             {
-//                System.out.println(enemy.x+" "+enemy.y);
-//                System.out.println(Snake.body.get(i).x+" "+ Snake.body.get(i).y);
                 for (int j = Snake.body.size() - 1; j >= i; j--)
                     Snake.body.remove(j);}
         }

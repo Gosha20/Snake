@@ -74,11 +74,8 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     
     private void drawEnemy(Graphics g){
-<<<<<<< HEAD
         g.drawImage(enemyImage, game.enemy.x*dotSize,game.enemy.y * dotSize + scoreHeight,this);
-=======
         g.drawImage(enemyImage, game.enemy.getEnemy().x * dotSize, game.enemy.getEnemy().y * dotSize + scoreHeight, this);
->>>>>>> 997ec11f1cf1e194ef53bacbcadfc1a158234444
     }
     
     private void setImageEnemy(){
