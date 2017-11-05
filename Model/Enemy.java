@@ -1,29 +1,29 @@
 package Snake.Model;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
 public class Enemy {
     public int x;
     public int y;
-    private final Image image;
+    private Point courseEnemy = new Point(0, 1);
 
-    public Image getImage() {
-        return image;
+    public Point getCourseEnemy() { return courseEnemy; }
+    
+    Enemy(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
-
-    Enemy(int x, int y){
-        this.x=x;
-
-        this.y=y;
-        this.image = new ImageIcon(getClass().getResource( "granat" + ".png")).getImage();
-    }
-    void move(){
+    void move() {
         Random rnd = new Random();
-        int new_x = rnd.nextInt(1);
-        int new_y = rnd.nextInt(1);
-        this.x += new_x;
-        this.y += new_y;
+
+        int newX = rnd.nextInt(3) - 1;
+        int newY = 0;
+        while(newX == 0 && newY == 0) // не диагональ и не нулевая скорость
+            newY = rnd.nextInt(3) - 1; // диапазон [-1;1]
+        courseEnemy = new Point(newX, newY);
+
+        this.x += newX;
+        this.y += newY;
     }
 }
