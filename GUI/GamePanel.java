@@ -64,17 +64,17 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     private void drawSnake(Graphics g)
     {
-        g.drawImage(snakeImageHead,game.Snake.GetHead().x * dotSize,game.Snake.GetHead().y* dotSize+ scoreHeight,this);
+        g.drawImage(snakeImageHead,game.Snake.GetHead().x * dotSize, game.Snake.GetHead().y* dotSize + scoreHeight, this);
         for(int i = 1; i< game.Snake.body.size()-1; i++)
             g.drawImage(snakeImageBody,
                     game.Snake.body.get(i).x * dotSize,
                     game.Snake.body.get(i).y * dotSize + scoreHeight,
                     this);
-        g.drawImage(snakeImageTail,game.Snake.getTail().x* dotSize,game.Snake.getTail().y* dotSize+ scoreHeight,this);
+        g.drawImage(snakeImageTail,game.Snake.getTail().x * dotSize, game.Snake.getTail().y * dotSize + scoreHeight, this);
     }
     
     private void drawEnemy(Graphics g){
-        g.drawImage(enemyImage, game.enemy.getX()*dotSize,game.enemy.getY() * dotSize + scoreHeight,this);
+        g.drawImage(enemyImage, game.enemy.getEnemy().x * dotSize, game.enemy.getEnemy().y * dotSize + scoreHeight, this);
     }
     
     private void setImageEnemy(){
