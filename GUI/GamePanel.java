@@ -14,6 +14,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private Image snakeImageHead ;
     private Image snakeImageTail ;
     private Image snakeImageBody = new ImageIcon(getClass().getResource("snakebody.png")).getImage();
+    private Image enemyImage;
     private static GameModel game;
     private Timer timer;
     private int delay = 400;
@@ -71,6 +72,16 @@ public class GamePanel extends JPanel implements ActionListener {
                     this);
         g.drawImage(snakeImageTail,game.Snake.getTail().x* dotSize,game.Snake.getTail().y* dotSize+ scoreHeight,this);
     }
+    
+    private void drawEnemy(Graphics g){
+        g.drawImage(enemyImage, game.enemy.getX()*dotSize,game.enemy.getY() * dotSize + scoreHeight,this);
+    }
+    
+    private void setImageEnemy(){
+        Point course = game.enemy.getCourseEnemy();
+        enemyImage = new ImageIcon(getClass().getResource("e" + course.x + course.y + ".png")).getImage();
+    }
+    
     private void drawBackground(Graphics g)
     {
         Image back = new ImageIcon(getClass().getResource( "field.png")).getImage();
@@ -78,6 +89,7 @@ public class GamePanel extends JPanel implements ActionListener {
             for (int j=0 ; j<game.getWidth();j++)
                 g.drawImage(back,j*dotSize,i*dotSize+scoreHeight,this);
     }
+    
     private void Draw(Graphics g) {
         if (game.gameOver){
             timer.stop();
@@ -87,10 +99,11 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         else {
             SetImageHeadAndTail();
+            setImageEnemy();
             drawBackground(g);
             drawScorePanel(g);
             g.drawImage(game.Buff.getImage(),game.Buff.x * dotSize,game.Buff.y * dotSize + scoreHeight,this);
-            g.drawImage(game.enemy.getImage(),game.enemy.x * dotSize,game.enemy.y * dotSize + scoreHeight,this);
+            drawEnemy(g);
             drawSnake(g);
             for(Point wall : game.walls)
                 g.drawImage(wallImage, wall.x * dotSize,wall.y * dotSize + scoreHeight, this);
