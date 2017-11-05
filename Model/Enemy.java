@@ -4,16 +4,18 @@ import java.awt.*;
 import java.util.Random;
 
 public class Enemy {
-    public int x;
-    public int y;
+    private int x;
+    private int y;
     private Point courseEnemy = new Point(0, 1);
-
+    
+    public Point getEnemy(){ return new Point(x, y); }
     public Point getCourseEnemy() { return courseEnemy; }
     
     Enemy(int x, int y) {
         this.x = x;
         this.y = y;
     }
+    
     void move() {
         Random rnd = new Random();
 
