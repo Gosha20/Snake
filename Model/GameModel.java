@@ -42,6 +42,7 @@ public class GameModel {
         enemy.move();
         eatBuff();
         fixHeadPosition();
+        collisionWithEnemy();
         if (CheckOnEatSelf() || CheckOnWall() || checkOnLittleSnakeSize())
             gameOver = true;
         SpawnFood();
@@ -120,6 +121,16 @@ public class GameModel {
         return Snake.body.size() < Constants.minSnakeSize;
     }
 
+    private void collisionWithEnemy() {
+        for (int i=0 ; i<Snake.body.size(); i++)
+        {
+            if ((Snake.body.get(i).x == enemy.x && Snake.body.get(i).y == enemy.y))
+            {
+                for ( int j =0; j<i; j++)
+                      Snake.body.pop();
+            }
+        }
+    }
     public int getHeight() {
         return height;
     }

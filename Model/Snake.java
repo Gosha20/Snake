@@ -88,8 +88,12 @@ public class Snake {
         Point course = new Point(0,0);
         if (tempPoint.x != 0)
             course.x = (int)(Math.signum(tempPoint.x));
+            if (Math.abs(tempPoint.x)>1)
+                course.x = - course.x;
         if (tempPoint.y != 0)
             course.y = (int)(Math.signum(tempPoint.y));
+            if (Math.abs(tempPoint.y)>1)
+                course.y = - course.y;
         return course;
     }
 }

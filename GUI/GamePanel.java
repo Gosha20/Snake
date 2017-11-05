@@ -39,10 +39,10 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void SetImageHeadAndTail(){
-        Point course = game.Snake.getpCourseHead();
+        Point courseHead = game.Snake.getpCourseHead();
         Point courseTail = game.Snake.getNextCourseTail();
         snakeImageTail = new ImageIcon(getClass().getResource("t"+courseTail.x+""+courseTail.y+".png")).getImage();
-        snakeImageHead = new ImageIcon(getClass().getResource(course.x+""+course.y+".png")).getImage();
+        snakeImageHead = new ImageIcon(getClass().getResource(courseHead.x+""+courseHead.y+".png")).getImage();
     }
 
     @Override
