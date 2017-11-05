@@ -39,14 +39,13 @@ public class GameModel {
         if (timeLiveBuff <= 0)
             existBuff = false;
         Snake.Move();
-        enemy.move();
         eatBuff();
-        fixPosition(Snake.getHead());
-        fixPosition(enemy.getEnemy());
+        fixPositionSnakeHead(Snake.GetHead());
         collisionWithEnemy();
         if(checkOnLittleSnakeSize() || CheckOnEatSelf() || CheckOnWall())
             gameOver = true;
         SpawnFood();
+        enemy.move(height, width);
     }
 
 
@@ -73,15 +72,15 @@ public class GameModel {
         return walls.contains(Snake.GetHead());
     }
 
-    private void fixPosition(Point point){
-        if (point.x >= width)
-            point.x = 0;
-        if (point.x < 0)
-            point.x = width - 1;
-        if (point.y >= height)
-            point.y = 0;
-        if (point.y < 0)
-            point.y = height - 1;
+    private void fixPositionSnakeHead(Point snakeHead){
+        if (snakeHead.x >= width)
+            snakeHead.x = 0;
+        if (snakeHead.x < 0)
+            snakeHead.x = width - 1;
+        if (snakeHead.y >= height)
+            snakeHead.y = 0;
+        if (snakeHead.y < 0)
+            snakeHead.y = height - 1;
     }
 
     private void eatBuff(){
@@ -123,9 +122,12 @@ public class GameModel {
 
     private void collisionWithEnemy(){
         for (int i = 0; i < Snake.body.size(); i++)
-            if (Snake.body.get(i).x == enemy.getEnemy().x && Snake.body.get(i).y == enemy.getEnemy().y)
+            if (Snake.body.get(i).x == enemy.x && Snake.body.get(i).y == enemy.y)
+            {
+//                System.out.println(enemy.x+" "+enemy.y);
+//                System.out.println(Snake.body.get(i).x+" "+ Snake.body.get(i).y);
                 for (int j = Snake.body.size() - 1; j >= i; j--)
-                    Snake.body.remove(j);
+                    Snake.body.remove(j);}
         }
     
     public int getHeight() {

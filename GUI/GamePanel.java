@@ -74,7 +74,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     
     private void drawEnemy(Graphics g){
-        g.drawImage(enemyImage, game.enemy.getX()*dotSize,game.enemy.getY() * dotSize + scoreHeight,this);
+        g.drawImage(enemyImage, game.enemy.x*dotSize,game.enemy.y * dotSize + scoreHeight,this);
     }
     
     private void setImageEnemy(){
@@ -103,11 +103,10 @@ public class GamePanel extends JPanel implements ActionListener {
             drawBackground(g);
             drawScorePanel(g);
             g.drawImage(game.Buff.getImage(),game.Buff.x * dotSize,game.Buff.y * dotSize + scoreHeight,this);
-            drawEnemy(g);
             drawSnake(g);
+            drawEnemy(g);
             for(Point wall : game.walls)
                 g.drawImage(wallImage, wall.x * dotSize,wall.y * dotSize + scoreHeight, this);
-
             Toolkit.getDefaultToolkit().sync();
         }
     }

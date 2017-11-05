@@ -1,7 +1,6 @@
 package Snake.Model;
 import java.awt.*;
 import java.util.Stack;
-import java.math.*;
 
 public class Snake {
     public Stack<Point> body = new Stack<>();
