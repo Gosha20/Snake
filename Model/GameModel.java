@@ -43,7 +43,7 @@ public class GameModel {
         eatBuff();
         fixHeadPosition();
         collisionWithEnemy();
-        if (CheckOnEatSelf() || CheckOnWall() || checkOnLittleSnakeSize())
+        if(checkOnLittleSnakeSize() || CheckOnEatSelf() || CheckOnWall())
             gameOver = true;
         SpawnFood();
     }
