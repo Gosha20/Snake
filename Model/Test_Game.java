@@ -39,7 +39,7 @@ public class Test_Game {
 
     @Test
     public void test_random_respawning_buff() {
-        Point prevBuffPoint = new Point(game.Buff.x,game.Buff.y);
+        Point prevBuffPoint = new Point(game.Buff.x, game.Buff.y);
         game.walls.add(new Point(game.Buff.x, game.Buff.y));
         game.existBuff = false;
 
@@ -47,17 +47,15 @@ public class Test_Game {
         Point newBuffPoint = new Point(game.Buff.x, game.Buff.y);
 
         assertTrue(game.existBuff);
-        assertNotEquals(newBuffPoint,prevBuffPoint);
+        assertNotEquals(newBuffPoint, prevBuffPoint);
     }
 
     @Test
     public void test_unusual_mode_has_walls() {
-        GameModel game = new GameModel(10, 10, 3, "unusual");
+        GameModel game = new GameModel(10, 10, 3, "Unusual");
 
         assertNotNull(game.walls);
         assertTrue(game.walls.size() > 0);
-
-        //переименовать тесты на понятные+++
     }
 
     @Test
@@ -85,9 +83,9 @@ public class Test_Game {
         int headY = game.Snake.GetHead().y;
 
 
-            if (2 > headX && headX > game.getWidth() - 3 && 2 > headY && headY > game.getHeight() - 3)
-                fail("Snake is too close to the boundaries");
-        }
+        if (2 > headX && headX > game.getWidth() - 3 && 2 > headY && headY > game.getHeight() - 3)
+            fail("Snake is too close to the boundaries");
+    }
 
 
     @Test
@@ -118,7 +116,7 @@ public class Test_Game {
         int prevScore = game.Score;
         game.RefreshField();
 
-        assertFalse( new Point(game.Buff.x, game.Buff.y) ==
+        assertFalse(new Point(game.Buff.x, game.Buff.y) ==
                 new Point(game.Snake.GetHead().x, game.Snake.GetHead().y));
         assertNotEquals(game.Snake.body.size(), sLength);
         assertNotEquals(game.Score, prevScore);
@@ -126,7 +124,7 @@ public class Test_Game {
 
     @Test
     public void test_reverse_direction_DOWN() {
-        game.Snake = new Snake(5,5,3,Course.DOWN);
+        game.Snake = new Snake(5, 5, 3, Course.DOWN);
         Point original = game.Snake.getpCourseHead();
 
         game.RefreshField();
@@ -137,7 +135,7 @@ public class Test_Game {
 
     @Test
     public void test_reverse_direction_UP() {
-        game.Snake = new Snake(5,5,3,Course.UP);
+        game.Snake = new Snake(5, 5, 3, Course.UP);
         Point original = game.Snake.getpCourseHead();
 
         game.RefreshField();
@@ -148,7 +146,7 @@ public class Test_Game {
 
     @Test
     public void test_reverse_direction_RIGHT() {
-        game.Snake = new Snake(5,5,3,Course.RIGHT);
+        game.Snake = new Snake(5, 5, 3, Course.RIGHT);
         Point original = game.Snake.getpCourseHead();
 
         game.RefreshField();
@@ -159,7 +157,7 @@ public class Test_Game {
 
     @Test
     public void test_reverse_direction_LEFT() {
-        game.Snake = new Snake(5,5,3,Course.LEFT);
+        game.Snake = new Snake(5, 5, 3, Course.LEFT);
         Point original = game.Snake.getpCourseHead();
 
         game.RefreshField();
@@ -169,21 +167,22 @@ public class Test_Game {
     }
 
     @Test
-    public void test_vertical_out_of_bounds(){
+    public void test_vertical_out_of_bounds() {
+        GameModel game = new GameModel(5,5,2,"classic");
+        game.Snake.SetCourse(Course.RIGHT);
+        game.RefreshField();
         game.Snake.SetCourse(Course.DOWN);
-
-        while(game.Snake.GetHead().y != game.getHeight() - 1)
+        while (game.Snake.GetHead().y != game.getHeight() - 1)
             game.RefreshField();
         game.RefreshField();
-
         assertFalse(game.gameOver);
     }
 
     @Test
-    public void test_horizontal_out_of_bounds(){
+    public void test_horizontal_out_of_bounds() {
         game.Snake.SetCourse(Course.LEFT);
 
-        while(game.Snake.GetHead().x != 0)
+        while (game.Snake.GetHead().x != 0)
             game.RefreshField();
         game.RefreshField();
 
@@ -191,7 +190,7 @@ public class Test_Game {
     }
 
     @Test
-    public void test_snake_bump_in_walls_gameover(){
+    public void test_snake_bump_in_walls_gameover() {
         game.Snake.SetCourse(Course.DOWN);
         game.walls.add(new Point(game.Snake.GetHead().x, game.Snake.GetHead().y + 1));
 
@@ -201,19 +200,80 @@ public class Test_Game {
     }
 
     @Test
-    public void test_Snake_move_after_refreshing(){
+    public void test_Snake_move_after_refreshing() {
+        GameModel game = new GameModel(5,5,3,"classic");
         Point prevHead = game.Snake.GetHead();
-        Stack prevSnake = game.Snake.body;
-
         game.RefreshField();
-
         assertNotEquals(prevHead, game.Snake.GetHead());
         Point suggestedPoint = new Point(prevHead.x + game.Snake.getpCourseHead().x, prevHead.y + game.Snake.getpCourseHead().y);
-        assertEquals(game.Snake.GetHead(),suggestedPoint);
+        assertEquals(game.Snake.GetHead(), suggestedPoint);
+    }
+
+    @Test
+    public void test_snake_getTail_basic() {
+        Snake snake = new Snake(2, 2, 5, new Point(2, 2));
+        assertEquals(snake.getTail(), snake.body.get(snake.body.size() - 1));
+    }
+
+    @Test
+    public void test_snake_getTail_with_minus_one() {
+        Snake snake = new Snake(2, 2, 5, new Point(2, 2));
+        snake.body.add(new Point(-1, -1));
+        assertEquals(snake.getTail(), snake.body.get(snake.body.size() - 2));
     }
     @Test
-    public void test_Snake_GetTailCourse(){
-        assertEquals(game.Snake.GetHead(),1);
+    public void test_snake_getTail_course_1() {
+        Snake snake = new Snake(2, 2, 3, new Point(2, 2));
+        assertEquals(snake.getNextCourseTail(), new Point(-1,0));
+    }
+    @Test
+    public void test_enemy_change_course() {
+        Enemy enemy = new Enemy(1,2);
+        enemy.countSteps = 1;
+        enemy.setCourseEnemy(new Point(1,0));
+        Point oldCourse = enemy.getCourseEnemy();
+        enemy.move(3,3);
+        assertEquals(oldCourse,enemy.getCourseEnemy());
+        enemy.move(3,3);
+        assertNotEquals(oldCourse,enemy.getCourseEnemy());
+    }
+    @Test
+    public void test_enemy_collision_snake_len3() {
+        GameModel game = new GameModel(5,5,3,"pacman");
+        System.out.println(game.Snake.body);
+        game.enemy.countSteps = 1;
+        game.enemy.setCourseEnemy(new Point(-1,0));
+        game.enemy.x = 2;
+        game.enemy.y = 2;
+        game.Snake.SetCourse(new Point(0,0));
+        game.RefreshField();
+        game.RefreshField();
+        assertEquals(2,game.Snake.body.size());
+    }
+    @Test
+    public void test_enemy_collision_snake_len2() {
+        GameModel game = new GameModel(5,5,2,"pacman");
+        game.enemy.setCourseEnemy(new Point(-1,0));
+        game.enemy.countSteps = 1;
+        game.enemy.x = 2;
+        game.enemy.y = 1;
+        game.Snake.SetCourse(new Point(0,0));
+        game.RefreshField();
+        game.RefreshField();
+        assertEquals(1,game.Snake.body.size());
+        assertEquals(true,game.gameOver);
+    }
+    @Test
+    public void test_enemy_collision_snake_len5() {
+        GameModel game = new GameModel(5,5,5,"pacman");
+        game.enemy.setCourseEnemy(new Point(-1,0));
+        game.enemy.x = 2;
+        game.enemy.y = 2;
+        game.enemy.countSteps = 1;
+        game.Snake.SetCourse(new Point(0,0));
+        game.RefreshField();
+        game.RefreshField();
+        assertEquals(2,game.Snake.body.size());
     }
 }
 

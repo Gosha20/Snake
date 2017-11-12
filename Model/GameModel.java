@@ -20,7 +20,8 @@ public class GameModel {
                                 new Buff("poison", -1, 20),
                                 new Buff("banan", 3, 15),
                                 new Buff("grapes", 5,15),
-                                new Buff("granat", 7,10)};
+                                new Buff("granat", 7,10)
+                                        };
     public Enemy enemy;
 
     public GameModel(int h, int w, int snakeLength, String mode){
@@ -29,23 +30,30 @@ public class GameModel {
         this.height = h;
         this.width = w;
         this.mode = mode;
-        this.enemy = new Enemy(5,5);
+        this.enemy = new Enemy(3,4);
         SpawnFood();
         SpawnWalls(mode);
     }
 
-    public void RefreshField(){
+    public void RefreshField() {
         timeLiveBuff--;
         if (timeLiveBuff <= 0)
             existBuff = false;
-        Snake.Move();
-        eatBuff();
-        fixPositionSnakeHead(Snake.GetHead());
-        collisionWithEnemy();
-        if(checkOnLittleSnakeSize() || CheckOnEatSelf() || CheckOnWall())
-            gameOver = true;
-        SpawnFood();
-        enemy.move(height, width);
+
+        if (mode.equals("pacman")) {
+            collisionWithEnemy();
+            enemy.move(height, width);
+        }
+
+        if (!gameOver)
+        {
+            Snake.Move();
+            eatBuff();
+            fixPositionSnakeHead(Snake.GetHead());
+            SpawnFood();
+            if (checkOnLittleSnakeSize() || CheckOnEatSelf() || CheckOnWall())
+                gameOver = true;
+        }
     }
 
 
@@ -102,7 +110,7 @@ public class GameModel {
     }
 
     private void SpawnWalls(String mode){
-        if (mode.equals("unusual")){
+        if (mode.equals("Unusual")){
             Random rnd = new Random();
             for (int i = 0; i < height; i++){
                 Point tempWall;
@@ -126,6 +134,7 @@ public class GameModel {
             {
                 for (int j = Snake.body.size() - 1; j >= i; j--)
                     Snake.body.remove(j);}
+            gameOver = checkOnLittleSnakeSize();
         }
     
     public int getHeight() {

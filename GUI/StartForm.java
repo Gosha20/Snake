@@ -1,8 +1,12 @@
 package Snake.GUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class StartForm extends JFrame{
     private JTextField name = new JTextField("Player1");
@@ -13,10 +17,11 @@ public class StartForm extends JFrame{
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-        setSize(200,200);
+        setSize(270,200);
         setLocationRelativeTo(null);
 
         JPanel Panel = new JPanel(null);
+
         add(Panel);
 
         JLabel LabelNamePlayer = new JLabel("Your name:");
@@ -37,7 +42,7 @@ public class StartForm extends JFrame{
         comboBoxSize.addItem("20x20");
         comboBoxSize.addItem("15x15");
         comboBoxSize.addItem("10x10");
-        comboBoxSize.setSelectedIndex(0);
+        comboBoxSize.setSelectedIndex(2);
 
         Panel.add(comboBoxSize);
         comboBoxSize.setLocation(90,35);
@@ -51,6 +56,7 @@ public class StartForm extends JFrame{
         JComboBox comboBoxMode = new JComboBox();
         comboBoxMode.addItem("Classic");
         comboBoxMode.addItem("Unusual");
+        comboBoxMode.addItem("pacman");
         comboBoxMode.setSelectedIndex(0);
 
         Panel.add(comboBoxMode);
