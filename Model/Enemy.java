@@ -6,14 +6,21 @@ import java.util.Random;
 public class Enemy {
     public int x;
     public int y;
+    static Point[] courses = {
+                                new Point(0,1),
+                                new Point(0,-1),
+                                new Point(1,0),
+                                new Point(-1,0)};
+
     private Point courseEnemy = new Point(0, -1);
     public Point getCourseEnemy() { return courseEnemy; }
     void setCourseEnemy(Point course){ courseEnemy = course;}
     int countSteps;
+
     Enemy(int x, int y) {
         this.x = x;
         this.y = y;
-        this.countSteps = 0;
+        this.countSteps = 1;
     }
 
     void move(int height, int width) {
@@ -29,13 +36,11 @@ public class Enemy {
     private Point changeCourse()
     {
         Random rnd = new Random();
-        int newX = rnd.nextInt(3) - 1;
-        int newY = rnd.nextInt(3) - 1;
-        while((newX == 0 && newY == 0) || Math.abs(newX*newY) == 1 || (courseEnemy.x == newX && courseEnemy.y == newY))
+        int i = rnd.nextInt(4);
+        while ((courseEnemy.x == courses[i].x && courseEnemy.y == courses[i].x))
         {
-            newY = rnd.nextInt(3) - 1;
-            newX = rnd.nextInt(3) - 1;
+            i = rnd.nextInt(4);
         }
-        return new Point(newX,newY);
+        return courses[i];
     }
 }

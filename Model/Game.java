@@ -15,11 +15,11 @@ public class Game {
     private int timeLiveBuff;
     boolean existBuff;
     private static Buff[] Buffs = new Buff[]{
-            new Buff("apple", 1, 20),
+//            new Buff("apple", 1, 20),
             new Buff("poison", -1, 20),
-            new Buff("banan", 3, 15),
-            new Buff("grapes", 5,15),
-            new Buff("granat", 7,10)
+//            new Buff("banan", 3, 15),
+//            new Buff("grapes", 5,15),
+//            new Buff("granat", 7,10)
     };
 
     public Game(int h, int w, int snakeLength){
@@ -30,17 +30,20 @@ public class Game {
         SpawnFood();
     }
 
-    public void RefreshField() {
-        timeLiveBuff--;
-        if (timeLiveBuff <= 0)
-            existBuff = false;
+    public void refreshField() {
+        if (!gameOver) {
+            timeLiveBuff--;
+            if (timeLiveBuff <= 0)
+                existBuff = false;
 
-        Snake.Move();
-        eatBuff();
-        fixPositionSnakeHead(Snake.GetHead());
-        SpawnFood();
-        if (checkOnLittleSnakeSize() || CheckOnEatSelf())
-            gameOver = true;
+            Snake.Move();
+            fixPositionSnakeHead(Snake.GetHead());
+            eatBuff();
+            SpawnFood();
+
+            if (checkOnLittleSnakeSize() || CheckOnEatSelf())
+                gameOver = true;
+        }
     }
 
 
@@ -91,7 +94,7 @@ public class Game {
         return false;
     }
 
-    private boolean checkOnLittleSnakeSize(){
+    boolean checkOnLittleSnakeSize(){
         return Snake.body.size() < Constants.minSnakeSize;
     }
 

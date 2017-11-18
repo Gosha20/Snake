@@ -10,10 +10,12 @@ public class GameWithBlocks extends Game{
         super(h,w,snakeLen);
         spawnWalls();
     }
+
+    @Override
     public void refreshField(){
-        super.RefreshField();
+        super.refreshField();
         if (checkOnWall())
-            super.gameOver = true;
+            gameOver = true;
     }
 
     private boolean checkOnWall()

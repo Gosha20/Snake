@@ -6,25 +6,40 @@ import java.awt.event.*;
 import javax.swing.JPanel;
 import javax.swing.*;
 import javax.swing.Timer;
-
 import static Snake.Constants.*;
 
-public class GamePanel extends JPanel implements ActionListener {
+public class Panelv2 extends JPanel implements ActionListener {
     private Image wallImage = new ImageIcon(getClass().getResource("sprt/wall.png")).getImage();
     private Image snakeImageHead ;
     private Image snakeImageTail ;
-    private Image snakeImageBody = new ImageIcon(getClass().getResource("sprt/snakebody.png")).getImage();
     private Image enemyImage;
-    private static GameModel game;
+    private Image snakeImageBody = new ImageIcon(getClass().getResource("sprt/snakebody.png")).getImage();
+    public GameWithBlocks gameWithBlock = null;
+    public GameWithPacman gameWithPacman = null;
+    public Game game;
     private Timer timer;
     private int delay = 400;
     private int scoreHeight ;
     private int scoreWidth;
     private String playerName;
+    private String GameMode;
 
-    GamePanel(int h, int w,String name, String mode){
+    Panelv2(int h, int w,String name, String mode){
+        GameMode = mode;
         playerName = name;
-        game = new GameModel(h, w,3, mode);
+        switch (mode){
+            case "block":
+                gameWithBlock = new GameWithBlocks(h, w,3);
+                game = gameWithBlock;
+                break;
+            case "pacman":
+                gameWithPacman = new GameWithPacman(h, w,3);
+                game = gameWithPacman;
+                break;
+            default:
+                game = new Game(h,w,3);
+                break;
+        }
         int panelHeight = (int) (Math.sqrt((double) (h * w * dotSize * dotSize)));
         int panelWidth = (int) (Math.sqrt((double) (h * w * dotSize * dotSize)));
         scoreHeight = (int)(panelHeight*0.15);
@@ -39,6 +54,10 @@ public class GamePanel extends JPanel implements ActionListener {
         timer.stop();
     }
 
+    private void setImageEnemy(int i){
+        Point course = gameWithPacman.enemies.get(i).getCourseEnemy();
+        enemyImage = new ImageIcon(getClass().getResource("sprt/e" + course.x + course.y + ".png")).getImage();
+    }
     private void SetImageHeadAndTail(){
         Point courseHead = game.Snake.getpCourseHead();
         Point courseTail = game.Snake.getNextCourseTail();
@@ -58,58 +77,60 @@ public class GamePanel extends JPanel implements ActionListener {
         Font font = new Font("Tahoma", Font.BOLD|Font.ITALIC, (int)(scoreHeight*0.3));
         g.setFont(font);
         g.drawString("Player: "+playerName, 5, (int)(scoreHeight*0.3));
-        g.drawString("Game Mode: " + game.mode, 5, (int)(scoreHeight*0.75));
+        g.drawString("Game Mode: " + GameMode, 5, (int)(scoreHeight*0.75));
         g.drawString("Score: "+ game.Score, (int)(scoreWidth*0.65), (int)(scoreHeight*0.75));
         g.drawString("Speed: " + (400-delay), (int)(scoreWidth*0.65), (int)(scoreHeight*0.3));
     }
-    private void drawSnake(Graphics g) {
-        g.drawImage(snakeImageHead, game.Snake.GetHead().x * dotSize, game.Snake.GetHead().y * dotSize + scoreHeight, this);
-        for (int i = 1; (i < game.Snake.body.size()-1); i++) {
-                if (!(game.Snake.body.get(i+1).x == -1 && game.Snake.body.get(i+1).y == -1))
-                    g.drawImage(snakeImageBody,
-                    game.Snake.body.get(i).x * dotSize,
-                    game.Snake.body.get(i).y * dotSize + scoreHeight,
-                    this);
-        }
-        g.drawImage(snakeImageTail,game.Snake.getTail().x * dotSize, game.Snake.getTail().y * dotSize + scoreHeight, this);
-    }
-    
+
     private void drawEnemy(Graphics g){
-        g.drawImage(enemyImage, game.enemy.x*dotSize,game.enemy.y * dotSize + scoreHeight,this);
-        g.drawImage(enemyImage, game.enemy.x * dotSize, game.enemy.y * dotSize + scoreHeight, this);
+        for (int i = 0; i< gameWithPacman.enemies.size();i++){
+            setImageEnemy(i);
+            Enemy enemy = gameWithPacman.enemies.get(i);
+            g.drawImage(enemyImage, enemy.x*dotSize,enemy.y * dotSize + scoreHeight,this);
+        }
     }
-    
-    private void setImageEnemy(){
-        Point course = game.enemy.getCourseEnemy();
-        enemyImage = new ImageIcon(getClass().getResource("sprt/e" + course.x + course.y + ".png")).getImage();
+    private void drawSnake(Graphics g) {
+        for (int i = 1; (i < game.Snake.body.size()-1); i++) {
+            if (!(game.Snake.body.get(i+1).x == -1 && game.Snake.body.get(i+1).y == -1))
+                g.drawImage(snakeImageBody,
+                        game.Snake.body.get(i).x * dotSize,
+                        game.Snake.body.get(i).y * dotSize + scoreHeight,
+                        this);
+        }
+        g.drawImage(snakeImageHead, game.Snake.GetHead().x * dotSize, game.Snake.GetHead().y * dotSize + scoreHeight, this);
+        g.drawImage(snakeImageTail, game.Snake.getTail().x * dotSize, game.Snake.getTail().y * dotSize + scoreHeight, this);
     }
-    
+
     private void drawBackground(Graphics g)
     {
         Image back = new ImageIcon(getClass().getResource( "sprt/field.png")).getImage();
-        for (int i=0 ; i<game.getHeight();i++)
-            for (int j=0 ; j<game.getWidth();j++)
+        for (int i = 0; i< game.getHeight(); i++)
+            for (int j = 0; j< game.getWidth(); j++)
                 g.drawImage(back,j*dotSize,i*dotSize+scoreHeight,this);
     }
-    
+
     private void Draw(Graphics g) {
         if (game.gameOver){
             timer.stop();
-            ExceptionsHandler.CloseWindowMsg("Score: "+game.Score + "\n HighScore: " + ScoreHandler.readScore() ,"Game Over!");
-            ScoreHandler.writeScore(playerName,game.Score);
+            ExceptionsHandler.CloseWindowMsg("Score: "+ game.Score + "\n HighScore: " + ScoreHandler.readScore() ,"Game Over!");
+            ScoreHandler.writeScore(playerName, game.Score);
             System.exit(1);
         }
         else {
             SetImageHeadAndTail();
-            setImageEnemy();
             drawBackground(g);
             drawScorePanel(g);
-            g.drawImage(game.Buff.getImage(),game.Buff.x * dotSize,game.Buff.y * dotSize + scoreHeight,this);
+            g.drawImage(game.Buff.getImage(), game.Buff.x * dotSize, game.Buff.y * dotSize + scoreHeight,this);
             drawSnake(g);
-            if (game.mode.equals("pacman"))
+            if (gameWithBlock != null)
+            {
+                for(Point wall : gameWithBlock.walls)
+                    g.drawImage(wallImage, wall.x * dotSize,wall.y * dotSize + scoreHeight, this);
+            }
+            if (gameWithPacman != null)
+            {
                 drawEnemy(g);
-            for(Point wall : game.walls)
-                g.drawImage(wallImage, wall.x * dotSize,wall.y * dotSize + scoreHeight, this);
+            }
             Toolkit.getDefaultToolkit().sync();
         }
     }
@@ -118,7 +139,7 @@ public class GamePanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         timer.stop();
         int curScore = game.Score;
-        game.RefreshField();
+        game.refreshField();
         repaint();
         if (delay > 60 && curScore != game.Score) {
             delay -= (game.Score-curScore)*speedCoef;
