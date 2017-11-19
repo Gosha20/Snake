@@ -25,14 +25,14 @@ public class GameWithBlocks extends Game{
 
     private void spawnWalls(){
         Random rnd = new Random();
-        for (int i = 0; i < super.getHeight(); i++){
+        for (int i = 0; i < getHeight(); i++){
             Point tempWall;
             do {
-                int x = rnd.nextInt(super.getHeight());
-                int y = rnd.nextInt(super.getWidth());
+                int x = rnd.nextInt(getHeight());
+                int y = rnd.nextInt(getWidth());
                 tempWall = new Point(x, y);
             }
-            while (super.Snake.body.contains(tempWall));
+            while (Snake.body.contains(tempWall)||(Buff.x==tempWall.x && Buff.y == tempWall.y));
             walls.add(tempWall);
         }
     }

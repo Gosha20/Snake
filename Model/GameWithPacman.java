@@ -32,7 +32,7 @@ public class GameWithPacman extends Game{
 
     }
     private int findPointMeeting(Enemy enemy){
-        int result = 999999999;
+        int result = Snake.body.size();
         for (int i = 0; i < Snake.body.size(); i++)
             if (Snake.body.get(i).x == enemy.x && Snake.body.get(i).y == enemy.y)
             {

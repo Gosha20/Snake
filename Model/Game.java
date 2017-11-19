@@ -14,11 +14,11 @@ public class Game {
     private int timeLiveBuff;
     boolean existBuff;
     private static Buff[] Buffs = new Buff[]{
-//            new Buff("apple", 1, 20),
+            new Buff("apple", 1, 20),
             new Buff("poison", -1, 20),
-//            new Buff("banan", 3, 15),
-//            new Buff("grapes", 5,15),
-//            new Buff("granat", 7,10)
+            new Buff("banan", 3, 15),
+            new Buff("grapes", 5,15),
+            new Buff("granat", 7,10)
     };
 
     public Game(int h, int w, int snakeLength){
@@ -39,7 +39,6 @@ public class Game {
             fixPositionSnakeHead(Snake.getHead());
             eatBuff();
             SpawnFood();
-
             if (checkOnLittleSnakeSize() || CheckOnEatSelf())
                 gameOver = true;
         }
