@@ -20,7 +20,7 @@ public class GameWithBlocks extends Game{
 
     private boolean checkOnWall()
     {
-        return walls.contains(Snake.GetHead());
+        return walls.contains(Snake.getHead());
     }
 
     private void spawnWalls(){

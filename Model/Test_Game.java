@@ -68,17 +68,17 @@ public class Test_Game {
 
     @Test
     public void test_snake_head_spawns_not_in_corners() {
-        assertNotEquals("Snake is in upper left corner", game.Snake.GetHead(), new Point(0, 0));
-        assertNotEquals("Snake is in upper right corner", game.Snake.GetHead(), new Point(game.getWidth() - 1, 0));
-        assertNotEquals("Snake is in lower left corner", game.Snake.GetHead(), new Point(0, game.getHeight() - 1));
-        assertNotEquals("Snake is in lower right corner", game.Snake.GetHead(), new Point(game.getWidth() - 1, game.getHeight() - 1));
+        assertNotEquals("Snake is in upper left corner", game.Snake.getHead(), new Point(0, 0));
+        assertNotEquals("Snake is in upper right corner", game.Snake.getHead(), new Point(game.getWidth() - 1, 0));
+        assertNotEquals("Snake is in lower left corner", game.Snake.getHead(), new Point(0, game.getHeight() - 1));
+        assertNotEquals("Snake is in lower right corner", game.Snake.getHead(), new Point(game.getWidth() - 1, game.getHeight() - 1));
     }
 
     @Test
     public void test_spawn_snake_head_futher_than_3_cells_to_boundaries() {
 
-        int headX = game.Snake.GetHead().x;
-        int headY = game.Snake.GetHead().y;
+        int headX = game.Snake.getHead().x;
+        int headY = game.Snake.getHead().y;
 
 
         if (2 > headX && headX > game.getWidth() - 3 && 2 > headY && headY > game.getHeight() - 3)
@@ -108,14 +108,14 @@ public class Test_Game {
     public void test_correct_eating() {
         Game game = new Game(6, 6, 3);
         game.Snake.SetCourse(Course.DOWN);
-        game.Buff.x = game.Snake.GetHead().x + game.Snake.getpCourseHead().x;
-        game.Buff.y = game.Snake.GetHead().y + game.Snake.getpCourseHead().y;
+        game.Buff.x = game.Snake.getHead().x + game.Snake.getpCourseHead().x;
+        game.Buff.y = game.Snake.getHead().y + game.Snake.getpCourseHead().y;
         int sLength = game.Snake.body.size();
         int prevScore = game.Score;
         game.refreshField();
 
         assertFalse(new Point(game.Buff.x, game.Buff.y) ==
-                new Point(game.Snake.GetHead().x, game.Snake.GetHead().y));
+                new Point(game.Snake.getHead().x, game.Snake.getHead().y));
         assertNotEquals(game.Snake.body.size(), sLength);
         assertNotEquals(game.Score, prevScore);
     }
@@ -170,7 +170,7 @@ public class Test_Game {
         game.Snake.SetCourse(Course.RIGHT);
         game.refreshField();
         game.Snake.SetCourse(Course.DOWN);
-        while (game.Snake.GetHead().y != game.getHeight() - 1)
+        while (game.Snake.getHead().y != game.getHeight() - 1)
             game.refreshField();
         game.refreshField();
         assertFalse(game.gameOver);
@@ -180,7 +180,7 @@ public class Test_Game {
     public void test_horizontal_out_of_bounds() {
         game.Snake.SetCourse(Course.LEFT);
 
-        while (game.Snake.GetHead().x != 0)
+        while (game.Snake.getHead().x != 0)
             game.refreshField();
         game.refreshField();
 
@@ -191,7 +191,7 @@ public class Test_Game {
     public void test_snake_bump_in_walls_gameover() {
         GameWithBlocks game = new GameWithBlocks(10,10,4);
         game.Snake.SetCourse(Course.DOWN);
-        game.walls.add(new Point(game.Snake.GetHead().x, game.Snake.GetHead().y + 1));
+        game.walls.add(new Point(game.Snake.getHead().x, game.Snake.getHead().y + 1));
 
         game.refreshField();
 
@@ -201,11 +201,11 @@ public class Test_Game {
     @Test
     public void test_Snake_move_after_refreshing() {
         Game game = new Game(5,5,3);
-        Point prevHead = game.Snake.GetHead();
+        Point prevHead = game.Snake.getHead();
         game.refreshField();
-        assertNotEquals(prevHead, game.Snake.GetHead());
+        assertNotEquals(prevHead, game.Snake.getHead());
         Point suggestedPoint = new Point(prevHead.x + game.Snake.getpCourseHead().x, prevHead.y + game.Snake.getpCourseHead().y);
-        assertEquals(game.Snake.GetHead(), suggestedPoint);
+        assertEquals(game.Snake.getHead(), suggestedPoint);
     }
 
     @Test

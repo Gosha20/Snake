@@ -2,7 +2,6 @@ package Snake.Model;
 
 import Snake.Constants;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Game {
@@ -37,7 +36,7 @@ public class Game {
                 existBuff = false;
 
             Snake.Move();
-            fixPositionSnakeHead(Snake.GetHead());
+            fixPositionSnakeHead(Snake.getHead());
             eatBuff();
             SpawnFood();
 
@@ -77,7 +76,7 @@ public class Game {
     }
 
     private void eatBuff(){
-        if (Snake.GetHead().x == Buff.x && Snake.GetHead().y == Buff.y)
+        if (Snake.getHead().x == Buff.x && Snake.getHead().y == Buff.y)
         {
             Score += Buff.countScore;
             Snake.EatBuff(Buff);
@@ -86,7 +85,7 @@ public class Game {
     }
 
     private boolean CheckOnEatSelf(){
-        Point snakeHead = Snake.GetHead();
+        Point snakeHead = Snake.getHead();
         for (int i = 1; i<Snake.body.size();i++){
             if (snakeHead.x == Snake.body.get(i).x && snakeHead.y == Snake.body.get(i).y)
                 return true;

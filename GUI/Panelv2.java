@@ -97,7 +97,7 @@ public class Panelv2 extends JPanel implements ActionListener {
                         game.Snake.body.get(i).y * dotSize + scoreHeight,
                         this);
         }
-        g.drawImage(snakeImageHead, game.Snake.GetHead().x * dotSize, game.Snake.GetHead().y * dotSize + scoreHeight, this);
+        g.drawImage(snakeImageHead, game.Snake.getHead().x * dotSize, game.Snake.getHead().y * dotSize + scoreHeight, this);
         g.drawImage(snakeImageTail, game.Snake.getTail().x * dotSize, game.Snake.getTail().y * dotSize + scoreHeight, this);
     }
 

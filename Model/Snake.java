@@ -6,7 +6,7 @@ public class Snake {
     public Stack<Point> body = new Stack<>();
     private Point pCourseHead;
     public Point getpCourseHead(){return pCourseHead;}
-    public Point GetHead(){return body.get(0);}
+    public Point getHead(){return body.get(0);}
 
     public Snake(int size){
         for (int i = 0; i < size;i++){
