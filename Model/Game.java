@@ -1,6 +1,8 @@
 package Snake.Model;
 
 import Snake.Constants;
+import Snake.GUI.Panelv2;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -103,4 +105,6 @@ public class Game {
     public int getWidth() {
         return width;
     }
+
+    public void Draw(Graphics g, int scoreHeight, Image Image, Panelv2 p){};
 }

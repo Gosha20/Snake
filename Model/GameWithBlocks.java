@@ -1,11 +1,16 @@
 package Snake.Model;
 
+import Snake.GUI.Panelv2;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static Snake.Constants.dotSize;
+
 public class GameWithBlocks extends Game{
     public ArrayList<Point> walls = new ArrayList<>();
+
     public GameWithBlocks(int h, int w, int snakeLen){
         super(h,w,snakeLen);
         spawnWalls();
@@ -20,7 +25,7 @@ public class GameWithBlocks extends Game{
 
     private boolean checkOnWall()
     {
-        return walls.contains(Snake.getHead());
+        return walls.contains(super.Snake.getHead());
     }
 
     private void spawnWalls(){
@@ -32,8 +37,14 @@ public class GameWithBlocks extends Game{
                 int y = rnd.nextInt(getWidth());
                 tempWall = new Point(x, y);
             }
-            while (Snake.body.contains(tempWall)||(Buff.x==tempWall.x && Buff.y == tempWall.y));
+            while (Snake.body.contains(tempWall)||(super.Buff.x==tempWall.x && super.Buff.y == tempWall.y));
             walls.add(tempWall);
         }
+    }
+
+    @Override
+    public void Draw(Graphics g, int scoreHeight, Image wallImage, Panelv2 p){
+        for(Point wall : walls)
+            g.drawImage(wallImage, wall.x * dotSize,wall.y * dotSize + scoreHeight, p);
     }
 }

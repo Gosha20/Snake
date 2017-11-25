@@ -42,28 +42,6 @@ public class TestGame {
         }
 
         @Test
-        public void test_random_respawning_buff() {
-            GameWithBlocks game = new GameWithBlocks(20, 20, 4);
-            Point prevBuffPoint = new Point(game.Buff.x, game.Buff.y);
-            game.walls.add(new Point(game.Buff.x, game.Buff.y));
-            game.existBuff = false;
-
-            game.refreshField();
-            Point newBuffPoint = new Point(game.Buff.x, game.Buff.y);
-
-            assertTrue(game.existBuff);
-            assertNotEquals(newBuffPoint, prevBuffPoint);
-        }
-
-        @Test
-        public void test_block_mode_has_walls() {
-            GameWithBlocks game = new GameWithBlocks(10, 10, 3);
-
-            assertNotNull(game.walls);
-            assertTrue(game.walls.size() > 0);
-        }
-
-        @Test
         public void test_little_snake_size_gameover() {
             while (game.Snake.body.size() > 1) {
                 game.Snake.body.pop();
@@ -234,6 +212,27 @@ public class TestGame {
             game.refreshField();
 
             assertTrue(game.gameOver);
+        }
+        @Test
+        public void test_random_respawning_buff() {
+            GameWithBlocks game = new GameWithBlocks(20, 20, 4);
+            Point prevBuffPoint = new Point(game.Buff.x, game.Buff.y);
+            game.walls.add(new Point(game.Buff.x, game.Buff.y));
+            game.existBuff = false;
+
+            game.refreshField();
+            Point newBuffPoint = new Point(game.Buff.x, game.Buff.y);
+
+            assertTrue(game.existBuff);
+            assertNotEquals(newBuffPoint, prevBuffPoint);
+        }
+
+        @Test
+        public void test_block_mode_has_walls() {
+            GameWithBlocks game = new GameWithBlocks(10, 10, 3);
+
+            assertNotNull(game.walls);
+            assertTrue(game.walls.size() > 0);
         }
     }
 

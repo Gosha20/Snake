@@ -1,6 +1,12 @@
 package Snake.Model;
 
+import Snake.GUI.Panelv2;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
+
+import static Snake.Constants.dotSize;
 
 public class GameWithPacman extends Game{
     public ArrayList<Enemy> enemies = new ArrayList<>();
@@ -24,6 +30,7 @@ public class GameWithPacman extends Game{
             if (!gameOver)
             {
                 int i = findPointMeeting(enemy);
+
                 for (int j = Snake.body.size() - 1; j >= i; j--)
                     Snake.body.remove(j);
                 gameOver = super.checkOnLittleSnakeSize();
@@ -32,12 +39,21 @@ public class GameWithPacman extends Game{
 
     }
     private int findPointMeeting(Enemy enemy){
-        int result = Snake.body.size();
         for (int i = 0; i < Snake.body.size(); i++)
             if (Snake.body.get(i).x == enemy.x && Snake.body.get(i).y == enemy.y)
-            {
-                result = i;
-            }
-        return result;
+                return i;
+        return Snake.body.size();
+    }
+    public void Draw(Graphics g, int scoreHeight, Image enemyImage, Panelv2 p){
+        for (int i = 0; i< enemies.size();i++){
+            Point course = enemies.get(i).getCourseEnemy();
+            enemyImage = new ImageIcon(getClass().getResource("sprt/e" + course.x + course.y + ".png")).getImage();
+            Enemy enemy = enemies.get(i);
+            g.drawImage(enemyImage, enemy.x*dotSize,enemy.y * dotSize + scoreHeight,p);
+        }
+    }
+    private Image setImageEnemy(int i){
+        Point course = enemies.get(i).getCourseEnemy();
+        return new ImageIcon(getClass().getResource("sprt/e" + course.x + course.y + ".png")).getImage();
     }
 }

@@ -1,5 +1,9 @@
 package Snake.GUI;
 
+import Snake.Model.Game;
+import Snake.Model.GameWithBlocks;
+import Snake.Model.GameWithPacman;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -88,8 +92,19 @@ public class StartForm extends JFrame{
                     int GameSizeH = Integer.parseInt(size[0]);
                     int GameSizeW = Integer.parseInt(size[1]);
                     String gameMode = comboBoxMode.getSelectedItem().toString();
-//                    new Form(new GamePanel(GameSizeH,GameSizeW,name.getText(), gameMode));
-                    new Form(new Panelv2(GameSizeH,GameSizeW,name.getText(), gameMode));
+                    Game game;
+                    switch (gameMode){
+                        case "block":
+                            game = new GameWithBlocks(GameSizeH, GameSizeW,3);
+                            break;
+                        case "pacman":
+                            game = new GameWithPacman(GameSizeH, GameSizeW,3);
+                            break;
+                        default:
+                            game = new Game(GameSizeH, GameSizeW,3);
+                            break;
+                    }
+                    new Form(new Panelv2(GameSizeH,GameSizeW,name.getText(),game, gameMode));
                     dispose();
                 } catch (Exception exeption)
                 {

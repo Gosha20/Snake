@@ -6,7 +6,7 @@ import java.util.Random;
 public class Enemy {
     public int x;
     public int y;
-    static Point[] courses = {
+    private final static Point[] courses = {
                                 new Point(0,1),
                                 new Point(0,-1),
                                 new Point(1,0),
@@ -15,7 +15,7 @@ public class Enemy {
     private Point courseEnemy = new Point(0, -1);
     public Point getCourseEnemy() { return courseEnemy; }
     void setCourseEnemy(Point course){ courseEnemy = course;}
-    int countSteps;
+    private int countSteps;
 
     Enemy(int x, int y) {
         this.x = x;
