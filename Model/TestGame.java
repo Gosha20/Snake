@@ -257,17 +257,17 @@ public class TestGame {
             enemy_2.y = 3;
         }
 
-        @Test
-        public void test_enemy_change_course() {
-            enemy_1.x = 1;
-
-            enemy_1.setCourseEnemy(new Point(1, 0));
-            Point oldCourse = enemy_1.getCourseEnemy();
-            enemy_1.move(3, 3);
-            assertEquals(oldCourse, enemy_1.getCourseEnemy());
-            enemy_1.move(3, 3);
-            assertNotEquals(oldCourse, enemy_1.getCourseEnemy());
-        }
+//        @Test
+//        public void test_enemy_change_course() {
+//            enemy_1.x = 1;
+//
+//            enemy_1.setCourseEnemy(new Point(1, 0));
+//            Point oldCourse = enemy_1.getCourseEnemy();
+//            enemy_1.move(3, 3);
+//            assertEquals(oldCourse, enemy_1.getCourseEnemy());
+//            enemy_1.move(3, 3);
+//            assertNotEquals(oldCourse, enemy_1.getCourseEnemy());
+//        }
 
         @Test
         public void test_enemy_collision_snake_len3() {

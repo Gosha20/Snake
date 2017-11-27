@@ -21,8 +21,25 @@ public class GameWithPacman extends Game{
     public void refreshField(){
         collisionWithEnemy();
         for(Enemy enemy : enemies)
-            enemy.move(getHeight(),getWidth());
+        {
+            Point target = getTarget(enemy);
+            enemy.move(getHeight(),getWidth(),target);
+        }
         super.refreshField();
+    }
+
+    private Point getTarget(Enemy enemy){
+        int minCountStepsToSnake = 1000;
+        int countStepsToBuff = Math.abs(super.Buff.x - enemy.x) + Math.abs(super.Buff.y - enemy.y);
+        Point target = new Point(super.Buff.x,super.Buff.y);
+        for (Point snakePoint : super.Snake.body) {
+             int temp = Math.abs(snakePoint.x - enemy.x) + Math.abs(snakePoint.y - enemy.y);
+             if (temp < minCountStepsToSnake && temp < countStepsToBuff){
+                 minCountStepsToSnake = temp;
+                target = snakePoint;
+             }
+        }
+        return target;
     }
 
     private void collisionWithEnemy(){
@@ -45,15 +62,11 @@ public class GameWithPacman extends Game{
         return Snake.body.size();
     }
     public void Draw(Graphics g, int scoreHeight, Image enemyImage, Panelv2 p){
-        for (int i = 0; i< enemies.size();i++){
-            Point course = enemies.get(i).getCourseEnemy();
+        for (Enemy enemy1 : enemies) {
+            Point course = enemy1.getCourseEnemy();
             enemyImage = new ImageIcon(getClass().getResource("sprt/e" + course.x + course.y + ".png")).getImage();
-            Enemy enemy = enemies.get(i);
-            g.drawImage(enemyImage, enemy.x*dotSize,enemy.y * dotSize + scoreHeight,p);
+            Enemy enemy = enemy1;
+            g.drawImage(enemyImage, enemy.x * dotSize, enemy.y * dotSize + scoreHeight, p);
         }
-    }
-    private Image setImageEnemy(int i){
-        Point course = enemies.get(i).getCourseEnemy();
-        return new ImageIcon(getClass().getResource("sprt/e" + course.x + course.y + ".png")).getImage();
     }
 }

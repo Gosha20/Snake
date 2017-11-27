@@ -23,9 +23,24 @@ public class Enemy {
         this.countSteps = 1;
     }
 
-    void move(int height, int width) {
-        if (countSteps % 5 == 0)
-            courseEnemy = changeCourse();
+    void move(int height, int width, Point target) {
+        Point vector = new Point(x - target.x,y-target.y);
+        if (vector.x != 0)
+            vector.x = (vector.x > 0) ? 1 : -1;
+        if (vector.y != 0)
+            vector.y = (vector.y > 0) ? 1 : -1;
+
+        for (Point course : courses)
+        {
+            if (course.x == vector.x && course.y == vector.y)
+            {
+                courseEnemy = vector;
+                break;
+            }
+        }
+
+//        if (countSteps % 5 == 0)
+//            courseEnemy = changeCourse();
         while(x+courseEnemy.x < 0 || y+courseEnemy.y>=height || y+courseEnemy.y<0 || x+courseEnemy.x>=width )
             courseEnemy = changeCourse();
         x += courseEnemy.x;
