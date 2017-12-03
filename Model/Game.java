@@ -36,7 +36,6 @@ public class Game {
             timeLiveBuff--;
             if (timeLiveBuff <= 0)
                 existBuff = false;
-
             Snake.Move();
             fixPositionSnakeHead(Snake.getHead());
             eatBuff();
@@ -76,7 +75,7 @@ public class Game {
             snakeHead.y = height - 1;
     }
 
-    private void eatBuff(){
+    void eatBuff(){
         if (Snake.getHead().x == Buff.x && Snake.getHead().y == Buff.y)
         {
             Score += Buff.countScore;
@@ -106,5 +105,5 @@ public class Game {
         return width;
     }
 
-    public void Draw(Graphics g, int scoreHeight, Image Image, Panelv2 p){};
+    public void Draw(Graphics g, int scoreHeight,int scoreW, Image Image, Panelv2 p){};
 }

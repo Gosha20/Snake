@@ -43,7 +43,7 @@ public class GameWithBlocks extends Game{
     }
 
     @Override
-    public void Draw(Graphics g, int scoreHeight, Image wallImage, Panelv2 p){
+    public void Draw(Graphics g, int scoreHeight,int scoreW, Image wallImage, Panelv2 p){
         for(Point wall : walls)
             g.drawImage(wallImage, wall.x * dotSize,wall.y * dotSize + scoreHeight, p);
     }

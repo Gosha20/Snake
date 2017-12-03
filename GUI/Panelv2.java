@@ -61,8 +61,8 @@ public class Panelv2 extends JPanel implements ActionListener {
         g.setFont(font);
         g.drawString("Player: "+playerName, 5, (int)(scoreHeight*0.3));
         g.drawString("Game Mode: " + GameMode, 5, (int)(scoreHeight*0.75));
-        g.drawString("Score: "+ game.Score, (int)(scoreWidth*0.65), (int)(scoreHeight*0.75));
-        g.drawString("Speed: " + (400-delay), (int)(scoreWidth*0.65), (int)(scoreHeight*0.3));
+        g.drawString("Score: "+ game.Score, (int)(scoreWidth*0.5), (int)(scoreHeight*0.75));
+        g.drawString("Speed: " + (400-delay), (int)(scoreWidth*0.5), (int)(scoreHeight*0.3));
     }
 
     private void drawSnake(Graphics g) {
@@ -98,8 +98,12 @@ public class Panelv2 extends JPanel implements ActionListener {
             drawScorePanel(g);
             g.drawImage(game.Buff.getImage(), game.Buff.x * dotSize, game.Buff.y * dotSize + scoreHeight,this);
             drawSnake(g);
-            game.Draw(g,scoreHeight,wallImage,this);
-            game.Draw(g,scoreHeight,enemyImage,this);
+            if (GameMode.equals("block"))
+                game.Draw(g,scoreHeight,scoreWidth,wallImage,this);
+            if (GameMode.equals("pacman"))
+            {
+                game.Draw(g,scoreHeight,scoreWidth,enemyImage,this);
+            }
             Toolkit.getDefaultToolkit().sync();
         }
     }

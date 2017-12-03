@@ -22,25 +22,18 @@ public class Enemy {
         this.y = y;
         this.countSteps = 1;
     }
-
+    private int getLengthBtwPoints(int x1,int y1, int x2, int y2){
+        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+    }
     void move(int height, int width, Point target) {
-        Point vector = new Point(x - target.x,y-target.y);
-        if (vector.x != 0)
-            vector.x = (vector.x > 0) ? 1 : -1;
-        if (vector.y != 0)
-            vector.y = (vector.y > 0) ? 1 : -1;
+        double minLenPath = getLengthBtwPoints(x,y,target.x,target.y);
 
         for (Point course : courses)
         {
-            if (course.x == vector.x && course.y == vector.y)
-            {
-                courseEnemy = vector;
-                break;
-            }
+            double lenPath = getLengthBtwPoints(x+course.x,y+course.y,target.x,target.y);
+            if ( lenPath < minLenPath)
+                courseEnemy = course;
         }
-
-//        if (countSteps % 5 == 0)
-//            courseEnemy = changeCourse();
         while(x+courseEnemy.x < 0 || y+courseEnemy.y>=height || y+courseEnemy.y<0 || x+courseEnemy.x>=width )
             courseEnemy = changeCourse();
         x += courseEnemy.x;
